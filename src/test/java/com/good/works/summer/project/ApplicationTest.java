@@ -1,6 +1,5 @@
 package com.good.works.summer.project;
 
-import com.good.works.summer.project.model.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
