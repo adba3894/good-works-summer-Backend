@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class HelloWorldController {
 
-    private static final String MESSAGE = "Hello, World!";
+    private static final String MESSAGE = "Welcome to IT academy project Backend, team 4!";
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message hello() {
