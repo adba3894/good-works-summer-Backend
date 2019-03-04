@@ -11,11 +11,11 @@ public class City {
     @Id
     private int id;
 
-    private String city_name;
+    private String name;
 
-    public City(int id, String city_name) {
+    public City(int id, String name) {
         this.id = id;
-        this.city_name = city_name;
+        this.name = name;
     }
 
     public City(){
@@ -30,11 +30,11 @@ public class City {
         this.id = id;
     }
 
-    public String getCity_name() {
-        return city_name;
+    public String getName() {
+        return name;
     }
 
-    public void setCity_name(String city_name) {
-        this.city_name = city_name;
+    public void setCity_name(String name) {
+        this.name = name;
     }
 }
