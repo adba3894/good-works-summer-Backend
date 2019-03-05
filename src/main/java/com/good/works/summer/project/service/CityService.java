@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 public class CityService {
 
-
     @Autowired
     public CityRepository cityRepository;
 
@@ -77,6 +76,9 @@ public class CityService {
                 ));
     }
 
+    public int getSizeOfCitiesDatabase(){
+        return Math.toIntExact(cityRepository.count());
+    }
 
 
 }

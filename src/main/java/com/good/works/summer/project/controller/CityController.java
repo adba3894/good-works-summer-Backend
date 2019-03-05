@@ -18,11 +18,12 @@ public class CityController {
 
     @GetMapping(value="lithuaniaCities")
     public List<City> getAllCities(){
-        cityService.createCities();
+        if(cityService.getSizeOfCitiesDatabase() == 0) {
+            cityService.createCities();
+        }
         return cityService.getAllCities();
+
     }
-
-
 
 
 }
