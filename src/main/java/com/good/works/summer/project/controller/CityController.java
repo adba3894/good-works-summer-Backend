@@ -18,6 +18,7 @@ public class CityController {
 
     @GetMapping(value="lithuaniaCities")
     public List<City> getAllCities(){
+        cityService.createCities();
         return cityService.getAllCities();
     }
 
