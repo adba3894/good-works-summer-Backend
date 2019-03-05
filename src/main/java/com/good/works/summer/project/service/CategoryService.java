@@ -1,6 +1,7 @@
 package com.good.works.summer.project.service;
 
 import com.good.works.summer.project.model.Category;
+import com.good.works.summer.project.model.City;
 import com.good.works.summer.project.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class CategoryService {
     public List<Category> getAllCategories(){
         return categoryRepository.findAll();
     }
+
+    public Iterable<Category> save(List<Category> categories) {
+        return categoryRepository.saveAll(categories);
+    }
+
 
 
 }

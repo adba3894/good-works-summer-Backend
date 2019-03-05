@@ -18,11 +18,7 @@ public class CityController {
 
     @GetMapping(value="/cities")
     public List<City> getAllCities(){
-        if(cityService.getSizeOfCitiesDatabase() == 0) {
-            cityService.createCities();
-        }
         return cityService.getAllCities();
-
     }
 
 
