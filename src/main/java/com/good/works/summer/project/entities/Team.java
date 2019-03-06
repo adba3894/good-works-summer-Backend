@@ -1,17 +1,17 @@
 package com.good.works.summer.project.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.List;
 
-//@Entity
-//@Table(name = "team")
+@Entity
+@Table(name = "team")
 public class Team {
 
     @Id
-    private int team_id;
+    @Column(name = "team_id")
+    private int id;
 
     private String lead_name;
 
@@ -20,11 +20,15 @@ public class Team {
 
     private String team_name;
 
-    //
+//    @OneToOne(fetch = FetchType.LAZY,
+////            cascade =  CascadeType.ALL,
+////            mappedBy = "team")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
-    //
-    private Project project;
+    @OneToMany(mappedBy="team")
+    private List<Project> projects;
 
     private String description;
 
@@ -33,23 +37,23 @@ public class Team {
     }
 
 
-    public Team(int team_id, String lead_name, @Email String lead_email, String team_name, City city, Project project, String description) {
-        this.team_id = team_id;
+    public Team(int id, String lead_name, @Email String lead_email, String team_name, City city, List<Project> projects, String description) {
+        this.id = id;
         this.lead_name = lead_name;
         this.lead_email = lead_email;
         this.team_name = team_name;
         this.city = city;
-        this.project = project;
+        this.projects = projects;
         this.description = description;
     }
 
 
-    public int getTeam_id() {
-        return team_id;
+    public int getId() {
+        return id;
     }
 
-    public void setTeam_id(int team_id) {
-        this.team_id = team_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLead_name() {
@@ -84,12 +88,12 @@ public class Team {
         this.city = city;
     }
 
-    public Project getProject() {
-        return project;
+    public List<Project> getProjects() {
+        return projects;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProject(List<Project> projects) {
+        this.projects = projects;
     }
 
     public String getDescription() {
