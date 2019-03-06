@@ -1,11 +1,10 @@
 package com.good.works.summer.project.service;
 
-import com.good.works.summer.project.model.City;
+import com.good.works.summer.project.entities.City;
 import com.good.works.summer.project.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service

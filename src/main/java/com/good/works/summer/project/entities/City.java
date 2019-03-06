@@ -1,4 +1,4 @@
-package com.good.works.summer.project.model;
+package com.good.works.summer.project.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -3,8 +3,7 @@ package com.good.works.summer.project;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.good.works.summer.project.model.Category;
-import com.good.works.summer.project.model.City;
+import com.good.works.summer.project.entities.City;
 import com.good.works.summer.project.service.CategoryService;
 import com.good.works.summer.project.service.CityService;
 import org.springframework.boot.CommandLineRunner;
@@ -37,23 +36,6 @@ public class Application {
 				System.out.println("Cities Saved!");
 			} catch (IOException e){
 				System.out.println("Unable to save cities: " + e.getMessage());
-			}
-		};
-	}
-
-	@Bean
-	CommandLineRunner categoriesRunner(CategoryService categoryService) {
-		return args -> {
-			// read json and write categories to db
-			ObjectMapper mapper = new ObjectMapper();
-			TypeReference<List<Category>> typeReference = new TypeReference<List<Category>>(){};
-			InputStream inputStream = TypeReference.class.getResourceAsStream("/json/categories.json");
-			try {
-				List<Category> categories = mapper.readValue(inputStream,typeReference);
-				categoryService.save(categories);
-				System.out.println("Categories Saved!");
-			} catch (IOException e){
-				System.out.println("Unable to save categories: " + e.getMessage());
 			}
 		};
 	}

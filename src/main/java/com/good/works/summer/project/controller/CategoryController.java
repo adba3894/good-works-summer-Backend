@@ -1,7 +1,7 @@
 package com.good.works.summer.project.controller;
 
 
-import com.good.works.summer.project.model.Category;
+import com.good.works.summer.project.enums.Category;
 import com.good.works.summer.project.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +21,7 @@ public class CategoryController {
 
 
     @GetMapping(value = "/categories")
-    public List<Category> getAllCategories(){
+    public List<String> getAllCategories(){
         return categoryService.getAllCategories();
     }
 
