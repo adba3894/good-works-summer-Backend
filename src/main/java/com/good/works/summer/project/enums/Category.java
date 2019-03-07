@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Category {
-
     SHARING_KNOWLEDGE("Sharing Knowledge"),
-    BEUTIFUL_ENVIRONMENT("Beautiful Environment"),
+    BEAUTIFUL_ENVIRONMENT("Beautiful Environment"),
     GIVING_BACK_TO_SOCIETY("Giving Back To Society"),
     HELPING_ANIMALS("Helping Animals");
 
@@ -28,5 +27,4 @@ public enum Category {
         }
         return cats;
     }
-
 }

@@ -1,5 +1,6 @@
 package com.good.works.summer.project.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.good.works.summer.project.enums.Category;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -8,28 +9,33 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "project")
-public class Project {
+public class  Project {
 
     @Id
     @Column(name = "project_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private Category category;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "project_id", nullable = false, referencedColumnName = "project_id")
+    @OneToOne
+    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
+    @JsonIgnore
     private Idea idea;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "team_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "team_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Team team;
 
-    public Project(int project_id, Category category, Idea idea) {
-        this.id = project_id;
+    public Project(Category category, Idea idea, Team team) {
         this.category = category;
         this.idea = idea;
+        this.team = team;
     }
+
+    public Project(){}
 
     public int getId() {
         return id;
@@ -54,4 +60,15 @@ public class Project {
     public void setIdea(Idea idea) {
         this.idea = idea;
     }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+
+
 }

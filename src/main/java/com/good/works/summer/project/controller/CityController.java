@@ -23,5 +23,4 @@ public class CityController {
         return cityService.getAllCities();
     }
 
-
 }

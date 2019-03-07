@@ -11,42 +11,43 @@ public class Team {
 
     @Id
     @Column(name = "team_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String lead_name;
+    private String leadName;
 
     @Email
-    private String lead_email;
+    private String leadEmail;
 
-    private String team_name;
+    private String teamName;
 
-//    @OneToOne(fetch = FetchType.LAZY,
-////            cascade =  CascadeType.ALL,
-////            mappedBy = "team")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "city_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(mappedBy="team")
-    private List<Project> projects;
+    @OneToMany(mappedBy="team", cascade = {CascadeType.ALL})
+    private List<Idea> ideas;
 
-    private String description;
+    private String organization;
 
-    public Team(){
-
+    public String getOrganization() {
+        return organization;
     }
 
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
 
-    public Team(int id, String lead_name, @Email String lead_email, String team_name, City city, List<Project> projects, String description) {
-        this.id = id;
-        this.lead_name = lead_name;
-        this.lead_email = lead_email;
-        this.team_name = team_name;
+    public Team(String leadName, @Email String leadEmail, String teamName, City city, List<Idea> ideas, String organization) {
+        this.leadName = leadName;
+        this.leadEmail = leadEmail;
+        this.teamName = teamName;
         this.city = city;
-        this.projects = projects;
-        this.description = description;
+        this.ideas = ideas;
+        this.organization = organization;
     }
 
+    public Team(){}
 
     public int getId() {
         return id;
@@ -56,28 +57,28 @@ public class Team {
         this.id = id;
     }
 
-    public String getLead_name() {
-        return lead_name;
+    public String getLeadName() {
+        return leadName;
     }
 
-    public void setLead_name(String lead_name) {
-        this.lead_name = lead_name;
+    public void setLeadName(String leadName) {
+        this.leadName = leadName;
     }
 
-    public String getLead_email() {
-        return lead_email;
+    public String getLeadEmail() {
+        return leadEmail;
     }
 
-    public void setLead_email(String lead_email) {
-        this.lead_email = lead_email;
+    public void setLeadEmail(String leadEmail) {
+        this.leadEmail = leadEmail;
     }
 
-    public String getTeam_name() {
-        return team_name;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeam_name(String team_name) {
-        this.team_name = team_name;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public City getCity() {
@@ -88,19 +89,14 @@ public class Team {
         this.city = city;
     }
 
-    public List<Project> getProjects() {
-        return projects;
+    public List<Idea> getIdeas() {
+        return ideas;
     }
 
-    public void setProject(List<Project> projects) {
-        this.projects = projects;
+    public void setIdeas(List<Idea> ideas) {
+        this.ideas = ideas;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+
 }
