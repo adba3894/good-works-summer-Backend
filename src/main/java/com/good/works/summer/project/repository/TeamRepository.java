@@ -1,5 +1,7 @@
 package com.good.works.summer.project.repository;
 
+import com.good.works.summer.project.entities.City;
+import com.good.works.summer.project.entities.Idea;
 import com.good.works.summer.project.entities.Team;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -9,5 +11,11 @@ import java.util.List;
 public interface TeamRepository extends CrudRepository<Team, Integer> {
 
     List<Team> findAll();
+    boolean existsTeamByLeadName(String leadName);
+    boolean existsTeamByLeadEmail(String leadEmail);
+    boolean existsTeamByTeamName(String teamName);
+    boolean existsTeamByCity(City city);
+    boolean existsTeamByIdeas(List<Idea> ideas);
+    boolean existsTeamByOrganization(String organization);
 
 }

@@ -3,6 +3,9 @@ package com.good.works.summer.project.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -14,25 +17,31 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @NotNull
+    @NotEmpty
+    @Size(max = 30)
     private String leadName;
 
-    @Email
+    @NotNull
+    @NotEmpty
+    @Email(message = "email must be valid")
     private String leadEmail;
 
+    @NotNull
+    @NotEmpty
+    @Size(max = 30)
     private String teamName;
 
-    @ManyToOne//(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
-
-//    @OneToMany(cascade = CascadeType.ALL) //bandymamas
-//    @JoinColumn(name="idea_id")
-//    private List<Idea> ideas;
 
     @OneToMany( cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id")
     private List<Idea> ideas;
 
+    @NotNull
+    @NotEmpty
     private String organization;
 
     public String getOrganization() {

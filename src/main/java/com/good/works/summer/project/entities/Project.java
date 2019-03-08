@@ -5,6 +5,7 @@ import com.good.works.summer.project.enums.Category;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "project")
@@ -15,20 +16,10 @@ public class  Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @NotNull
     private Category category;
 
-//    @OneToOne//(cascade = CascadeType.ALL)  //bandymams
-//    @JoinColumn(name = "idea_id", referencedColumnName = "idea_id")
-//    @JsonIgnore
-//    private Idea idea;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "team_id",referencedColumnName = "team_id")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JsonIgnore
-//    private Team team;
-
-    @OneToOne   //geras
+    @OneToOne
     @JoinColumn(name = "idea_id", referencedColumnName = "idea_id")
     @JsonIgnore
     private Idea idea;
@@ -78,7 +69,4 @@ public class  Project {
     public void setTeam(Team team) {
         this.team = team;
     }
-
-
-
 }

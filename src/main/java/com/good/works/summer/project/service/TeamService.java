@@ -8,6 +8,7 @@ import com.good.works.summer.project.repository.ProjectRepository;
 import com.good.works.summer.project.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -22,33 +23,57 @@ public class TeamService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public Team createTeam(Team team){
+    public Team createTeam(Team team) {
         return teamRepository.save(team);
     }
 
-    public List<Team> getAllTeams(){
+    public List<Team> getAllTeams() {
         return teamRepository.findAll();
     }
 
-    public List<Idea> getAllIdeas(){
+    public List<Idea> getAllIdeas() {
         return ideaRepository.findAll();
     }
 
-    public List<Project> getAllProjects(){
+    public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
 
-    public void deleteAllTeams(){
-        teamRepository.deleteAll();
+    public boolean validateTeamUniqueness(Team team) {
+        if(existByTeamName(team)
+                && existsByTeamLeadName(team)
+                && existByTeamLeadEmail(team)
+                && existByTeamCity(team)
+                && existsByTeamOrganization(team)
+                && existByTeamIdeas(team)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void deleteAllIdeas(){
-        ideaRepository.deleteAll();
+    public boolean existByTeamName(Team team) {
+        return teamRepository.existsTeamByTeamName(team.getTeamName());
     }
 
-    public void deleteAllProjects(){
-        projectRepository.deleteAll();
+    public boolean existsByTeamLeadName(Team team) {
+        return teamRepository.existsTeamByLeadName(team.getLeadName());
     }
 
-//pasitiklsinti del strukturos
+    public boolean existByTeamLeadEmail(Team team) {
+        return teamRepository.existsTeamByLeadEmail(team.getLeadEmail());
+    }
+
+    public boolean existByTeamCity(Team team) {
+        return teamRepository.existsTeamByCity(team.getCity());
+    }
+
+    public boolean existsByTeamOrganization(Team team) {
+        return teamRepository.existsTeamByOrganization(team.getOrganization());
+    }
+
+    public boolean existByTeamIdeas(Team team) {
+        return teamRepository.existsTeamByIdeas(team.getIdeas());
+    }
+
 }
