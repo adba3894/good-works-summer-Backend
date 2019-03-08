@@ -17,11 +17,23 @@ public class Idea {
 
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
+//    @OneToOne(mappedBy = "idea", cascade =  CascadeType.ALL) bandymams
+//    private Project project;
+//
+//
+//    @ManyToOne
+//    @JoinColumn(name = "team_id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private Team team;
+
+
+    @OneToOne(cascade =  CascadeType.ALL)
+    @JoinColumn(name="project_id", referencedColumnName = "project_id")
     private Project project;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn(name = "team_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore

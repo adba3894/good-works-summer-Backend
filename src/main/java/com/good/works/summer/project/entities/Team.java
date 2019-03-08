@@ -21,12 +21,16 @@ public class Team {
 
     private String teamName;
 
-    @ManyToOne
+    @ManyToOne//(cascade=CascadeType.ALL)
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="idea_id")
+//    @OneToMany(cascade = CascadeType.ALL) //bandymamas
+//    @JoinColumn(name="idea_id")
+//    private List<Idea> ideas;
+
+    @OneToMany( cascade = CascadeType.ALL)
+    @JoinColumn(name = "team_id")
     private List<Idea> ideas;
 
     private String organization;

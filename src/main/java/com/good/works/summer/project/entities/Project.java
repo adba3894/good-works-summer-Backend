@@ -17,7 +17,18 @@ public class  Project {
 
     private Category category;
 
-    @OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne//(cascade = CascadeType.ALL)  //bandymams
+//    @JoinColumn(name = "idea_id", referencedColumnName = "idea_id")
+//    @JsonIgnore
+//    private Idea idea;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "team_id",referencedColumnName = "team_id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private Team team;
+
+    @OneToOne   //geras
     @JoinColumn(name = "idea_id", referencedColumnName = "idea_id")
     @JsonIgnore
     private Idea idea;
