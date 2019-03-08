@@ -25,7 +25,8 @@ public class Team {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(mappedBy="team", cascade = {CascadeType.ALL})
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="idea_id")
     private List<Idea> ideas;
 
     private String organization;

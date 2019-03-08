@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.good.works.summer.project.enums.Category;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Entity
@@ -18,13 +17,13 @@ public class  Project {
 
     private Category category;
 
-    @OneToOne
-    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idea_id", referencedColumnName = "idea_id")
     @JsonIgnore
     private Idea idea;
 
     @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "team_id",referencedColumnName = "team_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Team team;

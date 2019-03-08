@@ -4,7 +4,6 @@ package com.good.works.summer.project.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Entity
@@ -18,12 +17,11 @@ public class Idea {
 
     private String description;
 
-
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "idea_id", referencedColumnName = "idea_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private Project project;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
