@@ -14,7 +14,7 @@ import java.util.List;
 public class TeamController {
 
     @Autowired
-    public TeamService teamService;
+    private TeamService teamService;
 
     @PostMapping(value = "/registration")
     public Team registerTeam(@RequestBody Team team) throws TeamUniquenessException {

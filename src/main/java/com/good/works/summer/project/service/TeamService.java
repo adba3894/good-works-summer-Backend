@@ -39,6 +39,7 @@ public class TeamService {
         return projectRepository.findAll();
     }
 
+    //Main validation method
     public boolean validateTeamUniqueness(Team team) {
         if(existByTeamName(team)
                 && existsByTeamLeadName(team)
@@ -73,7 +74,27 @@ public class TeamService {
     }
 
     public boolean existByTeamIdeas(Team team) {
-        return teamRepository.existsTeamByIdeas(team.getIdeas());
+        return ifTeamWithSameIdeaAndCategoryExists(team);
     }
 
+    public boolean ifTeamWithSameIdeaAndCategoryExists(Team team){
+
+        for(int i = 0; i < teamRepository.findAll().size(); i++) {
+            List<Idea> ideas = teamRepository.findAll().get(i).getIdeas();
+            for (int j = 0; j < ideas.size(); j++) {
+                if (ifTeamWithSameDescriptionExsist(team, ideas, j) && ifTeamWithSameCategoryExsist(team,ideas, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean ifTeamWithSameDescriptionExsist(Team team, List<Idea> ideas, int j){
+        return ideas.get(j).getDescription().equals(team.getIdeas().get(j).getDescription());
+    }
+
+    public boolean ifTeamWithSameCategoryExsist(Team team, List<Idea> ideas, int j){
+        return ideas.get(j).getProject().getCategory().equals(team.getIdeas().get(j).getProject().getCategory());
+    }
 }
