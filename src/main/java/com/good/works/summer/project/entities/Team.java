@@ -9,7 +9,9 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "team")
+//@Table(name = "team", uniqueConstraints = {
+//        @UniqueConstraint(name = "uniqueTeamConstraint", columnNames = {"leadName","teamName", "leadEmail", "city_id", "organization", "team_id"})})
+@Table(name="team")
 public class Team {
 
     @Id
@@ -24,7 +26,7 @@ public class Team {
 
     @NotNull
     @NotEmpty
-    @Email(message = "email must be valid")
+    @Email(message = "email must contain '@' symbol")
     private String leadEmail;
 
     @NotNull
