@@ -47,7 +47,7 @@ public class TeamService {
                 && existByTeamLeadEmail(team)
                 && existByTeamCity(team)
                 && existsByTeamOrganization(team)
-                && existByTeamIdeas(team)) {
+                && existByTeamIdeas()) {
             throw new UniqueTeamException();
         }
     }
@@ -72,18 +72,17 @@ public class TeamService {
         return teamRepository.existsTeamByOrganization(team.getOrganization());
     }
 
-    public boolean existByTeamIdeas(Team team) {
-        return ifTeamWithSameIdeaAndCategoryExists(team);
+    public boolean existByTeamIdeas() {
+        return ifTeamWithSameIdeaAndCategoryExists();
     }
 
-    public boolean ifTeamWithSameIdeaAndCategoryExists(Team team){
 
+    public boolean ifTeamWithSameIdeaAndCategoryExists(){
         List<Team> teams = teamRepository.findAll();
-
-        for(int i = 0; i < teams.size(); i++) {
-            List<Idea> ideas = teams.get(i).getIdeas();
-            for (int j = 0; j < ideas.size(); j++) {
-                if (ifTeamWithSameDescriptionExist(team, ideas, j) && ifTeamWithSameCategoryExist(team,ideas, j)) {
+        for(Team teamObj: teams) {
+            List<Idea> ideas = teamObj.getIdeas();
+            for (Idea ideaObj: ideas) {
+                if (ifTeamWithSameDescriptionExist(ideaObj) && ifTeamWithSameCategoryExist(ideaObj)) {
                     return true;
                 }
             }
@@ -91,11 +90,11 @@ public class TeamService {
         return false;
     }
 
-    public boolean ifTeamWithSameDescriptionExist(Team team, List<Idea> ideas, int j){
-        return ideas.get(j).getDescription().equals(team.getIdeas().get(j).getDescription());
+    public boolean ifTeamWithSameDescriptionExist(Idea ideaObj){
+        return ideaObj.getDescription().equals(ideaObj.getDescription());
     }
 
-    public boolean ifTeamWithSameCategoryExist(Team team, List<Idea> ideas, int j){
-        return ideas.get(j).getProject().getCategory().equals(team.getIdeas().get(j).getProject().getCategory());
+    public boolean ifTeamWithSameCategoryExist(Idea ideaObj){
+        return ideaObj.getProject().getCategory().equals(ideaObj.getProject().getCategory());
     }
 }
