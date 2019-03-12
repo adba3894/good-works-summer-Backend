@@ -3,7 +3,7 @@ package com.good.works.summer.project.controller;
 import com.good.works.summer.project.entities.Idea;
 import com.good.works.summer.project.entities.Project;
 import com.good.works.summer.project.entities.Team;
-import com.good.works.summer.project.exceptions.TeamUniquenessException;
+import com.good.works.summer.project.exceptions.UniqueTeamException;
 import com.good.works.summer.project.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +14,11 @@ import java.util.List;
 public class TeamController {
 
     @Autowired
-    public TeamService teamService;
+    private TeamService teamService;
 
     @PostMapping(value = "/registration")
-    public Team registerTeam(@RequestBody Team team) throws TeamUniquenessException {
-        if(teamService.validateTeamUniqueness(team)){
-            throw new TeamUniquenessException();
-        }
+    public Team registerTeam(@RequestBody Team team) throws UniqueTeamException{
+        teamService.validateTeamUniqueness(team);
         return teamService.createTeam(team);
     }
 
