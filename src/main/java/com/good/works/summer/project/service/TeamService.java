@@ -48,13 +48,13 @@ public class TeamService {
         List<Team> teams = teamRepository.findAll();
         for(Team team: teams) {
             if(checkTeamNameEquality(team, teamToCheck)
-                && checkTeamLeadNameEquality(team, teamToCheck)
-                && checkLeadEmailEquality(team,teamToCheck)
-                && checkCityEquality(team,teamToCheck)
-                && checkOrganizationEquality(team,teamToCheck)
-                && checkIdeaAndCategoryEquality(team, teamToCheck)) {
-            throw new UniqueTeamException();
-        }
+                    && checkTeamLeadNameEquality(team, teamToCheck)
+                    && checkLeadEmailEquality(team,teamToCheck)
+                    && checkCityEquality(team,teamToCheck)
+                    && checkOrganizationEquality(team,teamToCheck)
+                    && checkIdeaAndCategoryEquality(team, teamToCheck)) {
+                throw new UniqueTeamException();
+            }
         }
     }
 
