@@ -1,9 +1,13 @@
 package com.good.works.summer.project.exceptions;
 
-public class TeamUniquenessException extends Exception{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public TeamUniquenessException(){
-        super("Team with this data already exists!");
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+public class UniqueTeamException extends Exception{
+
+    public UniqueTeamException(){
+        super("Team with same data already exists!");
     }
 
 }
