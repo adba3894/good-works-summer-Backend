@@ -32,6 +32,9 @@ dependencies {
 //    testavimui
     compile group: 'com.h2database', name: 'h2', version: '1.4.198'
     runtime "com.h2database:h2:1.4.190"
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.198'
+
 
 
 
