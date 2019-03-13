@@ -4,6 +4,7 @@ import com.good.works.summer.project.entities.Idea;
 import com.good.works.summer.project.entities.Project;
 import com.good.works.summer.project.entities.Team;
 import com.good.works.summer.project.enums.Category;
+import com.good.works.summer.project.exceptions.TeamSizeException;
 import com.good.works.summer.project.exceptions.UniqueTeamException;
 import com.good.works.summer.project.repository.IdeaRepository;
 import com.good.works.summer.project.repository.ProjectRepository;
@@ -14,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
@@ -46,46 +48,46 @@ public class TeamService {
     //Main validation method
     public void validateTeamUniqueness(Team teamToCheck) throws UniqueTeamException {
         List<Team> teams = teamRepository.findAll();
-        for(Team team: teams) {
-            if(checkTeamNameEquality(team, teamToCheck)
+        for (Team team : teams) {
+            if (checkTeamNameEquality(team, teamToCheck)
                     && checkTeamLeadNameEquality(team, teamToCheck)
-                    && checkLeadEmailEquality(team,teamToCheck)
-                    && checkCityEquality(team,teamToCheck)
-                    && checkOrganizationEquality(team,teamToCheck)
+                    && checkLeadEmailEquality(team, teamToCheck)
+                    && checkCityEquality(team, teamToCheck)
+                    && checkOrganizationEquality(team, teamToCheck)
                     && checkIdeaAndCategoryEquality(team, teamToCheck)) {
                 throw new UniqueTeamException();
             }
         }
     }
 
-    public boolean checkTeamNameEquality(Team team, Team teamToCheck){
+    public boolean checkTeamNameEquality(Team team, Team teamToCheck) {
         return team.getTeamName().equals(teamToCheck.getTeamName());
     }
 
-    public boolean checkTeamLeadNameEquality(Team team, Team teamToCheck){
+    public boolean checkTeamLeadNameEquality(Team team, Team teamToCheck) {
         return team.getLeadName().equals(teamToCheck.getLeadName());
     }
 
-    public boolean checkLeadEmailEquality(Team team, Team teamToCheck){
+    public boolean checkLeadEmailEquality(Team team, Team teamToCheck) {
         return team.getLeadEmail().equals(teamToCheck.getLeadEmail());
     }
 
     public boolean checkCityEquality(Team team, Team teamToCheck) {
-        return team.getCity().getId()==(teamToCheck.getCity().getId());
+        return team.getCity().getId() == (teamToCheck.getCity().getId());
     }
 
-    public boolean checkOrganizationEquality(Team team, Team teamToCheck){
+    public boolean checkOrganizationEquality(Team team, Team teamToCheck) {
         return team.getOrganization().equals(teamToCheck.getOrganization());
     }
 
-    public boolean checkIdeaAndCategoryEquality(Team team, Team teamToCheck){
+    public boolean checkIdeaAndCategoryEquality(Team team, Team teamToCheck) {
         return ifTeamWithSameIdeaAndCategoryExists(team, teamToCheck);
     }
 
-    public boolean ifTeamWithSameIdeaAndCategoryExists(Team team, Team teamToCheck){
-        for(Idea idea: team.getIdeas()){
-            for(Idea ideaToCheck: teamToCheck.getIdeas()){
-                if(checkIdeasEquality(idea,ideaToCheck) && checkCategoriesEquality(idea, ideaToCheck)){
+    public boolean ifTeamWithSameIdeaAndCategoryExists(Team team, Team teamToCheck) {
+        for (Idea idea : team.getIdeas()) {
+            for (Idea ideaToCheck : teamToCheck.getIdeas()) {
+                if (checkIdeasEquality(idea, ideaToCheck) && checkCategoriesEquality(idea, ideaToCheck)) {
                     return true;
                 }
             }
@@ -93,12 +95,35 @@ public class TeamService {
         return false;
     }
 
-    public boolean checkIdeasEquality(Idea idea, Idea ideaToCheck){
+    public boolean checkIdeasEquality(Idea idea, Idea ideaToCheck) {
         return idea.getDescription().equals(ideaToCheck.getDescription());
     }
 
-    public boolean checkCategoriesEquality(Idea idea, Idea ideaToCheck){
+    public boolean checkCategoriesEquality(Idea idea, Idea ideaToCheck) {
         return idea.getProject().getCategory().equals(ideaToCheck.getProject().getCategory());
     }
+
+    public void ifOrganizationHasMoreThanFiveTeamsInSameCity(Team team) throws TeamSizeException {
+        List<Team> teamList = teamRepository.findTeamByCity(team.getCity());
+        teamList = teamList.stream()
+                .filter(var -> var.getOrganization().equals(team.getOrganization()))
+                .collect(Collectors.toList());
+
+        if (teamList.size() >= 5) {
+            throw new TeamSizeException();
+        }
+    }
+
+
+    public List<Team> filterTeamsByCategory(Category categoryTitle){
+        List<Team> filteredTeamsList = teamRepository.findAll();
+        filteredTeamsList = filteredTeamsList.stream()
+                .filter(team -> team.getIdeas().stream()
+                        .anyMatch(idea -> idea.getProject().getCategory().equals(categoryTitle)))
+                .collect(Collectors.toList());
+        return filteredTeamsList;
+    }
+
+
 
 }
