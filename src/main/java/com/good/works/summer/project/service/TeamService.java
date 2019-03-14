@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,15 +116,32 @@ public class TeamService {
     }
 
 
-    public List<Team> filterTeamsByCategory(Category categoryTitle){
+    public List<Team> filterTeamsByCategory(Category categoryTitle) {
         List<Team> filteredTeamsList = teamRepository.findAll();
         filteredTeamsList = filteredTeamsList.stream()
-                .filter(team -> team.getIdeas().stream()
-                        .anyMatch(idea -> idea.getProject().getCategory().equals(categoryTitle)))
+                .filter(team -> team.getIdeas().stream().anyMatch(idea -> idea.getProject().getCategory().equals(categoryTitle)
+                        && idea.getProject().isApproved()))
+                .sorted((first, second) -> second.getId() - first.getId())
                 .collect(Collectors.toList());
         return filteredTeamsList;
     }
 
+    public void approveProjectByID(int projectId) {
+        List<Team> teamList = this.teamRepository.findAll();
 
 
+        /*teamList.stream()
+                .flatMap(team -> team.getIdeas().stream())
+                .filter(idea->idea.getId()== projectId)
+                .forEach(idea->idea.getProject().setApproved());
+
+        */
+        for(Team team : teamList){
+            for(Idea idea: team.getIdeas()){
+                if( idea.getProject().getId() == projectId){
+                    idea.getProject().setApproved();
+                }
+            }
+        }
+    }
 }

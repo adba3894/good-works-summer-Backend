@@ -28,5 +28,4 @@ public interface TeamRepository extends CrudRepository<Team, Integer> {
 
     List<Team> findTeamByCity(City city);
 
-
 }

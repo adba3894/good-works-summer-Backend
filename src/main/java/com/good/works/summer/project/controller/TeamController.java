@@ -20,7 +20,7 @@ public class TeamController {
 
     @PostMapping(value = "/registration")
     public Team registerTeam(@RequestBody Team team) throws UniqueTeamException, TeamSizeException {
-        //teamService.validateTeamUniqueness(team);
+        teamService.validateTeamUniqueness(team);
         teamService.ifOrganizationHasMoreThanFiveTeamsInSameCity(team);
         return teamService.createTeam(team);
     }
@@ -45,4 +45,8 @@ public class TeamController {
         return teamService.getAllProjects();
     }
 
+    @PostMapping(value = "/approve/{id}")
+    public void approve(@PathVariable String id){
+        this.teamService.approveProjectByID(Integer.parseInt(id));
+    }
 }
