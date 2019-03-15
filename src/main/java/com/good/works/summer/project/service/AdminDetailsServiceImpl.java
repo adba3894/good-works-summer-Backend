@@ -1,6 +1,6 @@
 package com.good.works.summer.project.service;
 
-import com.good.works.summer.project.entities.ApplicationUser;
+import com.good.works.summer.project.entities.Admin;
 import com.good.works.summer.project.repository.ApplicationUserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,10 +20,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
-        if (applicationUser == null) {
+        Admin admin = applicationUserRepository.findByUsername(username);
+        if (admin == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new User(applicationUser.getUsername(), applicationUser.getPassword(), emptyList());
+        return new User(admin.getUsername(), admin.getPassword(), emptyList());
     }
 }

@@ -1,6 +1,6 @@
 package com.good.works.summer.project.controller;
 
-import com.good.works.summer.project.entities.ApplicationUser;
+import com.good.works.summer.project.entities.Admin;
 import com.good.works.summer.project.repository.ApplicationUserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody ApplicationUser user) {
+    public void signUp(@RequestBody Admin user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         applicationUserRepository.save(user);
     }
