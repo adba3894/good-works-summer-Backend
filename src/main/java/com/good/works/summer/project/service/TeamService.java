@@ -45,7 +45,6 @@ public class TeamService {
         return projectRepository.findAll();
     }
 
-    //Main validation method
 //    public void validateTeamUniqueness(Team teamToCheck) throws UniqueTeamException {
 //        List<Team> teams = teamRepository.findAll();
 //        for (Team team : teams) {
@@ -87,7 +86,6 @@ public class TeamService {
         return false;
     }
 
-
 //    public boolean checkOrganizationEquality(Team team, Team teamToCheck) {
 //        return team.getOrganization().equals(teamToCheck.getOrganization());
 //    }
@@ -125,8 +123,8 @@ public class TeamService {
 //            throw new TeamSizeException();
 //        }
 //    }
-//
-//
+
+
 //    public List<Team> filterTeamsByCategory(Category categoryTitle){
 //        List<Team> filteredTeamsList = teamRepository.findAll();
 //        filteredTeamsList = filteredTeamsList.stream()
@@ -135,7 +133,6 @@ public class TeamService {
 //                .collect(Collectors.toList());
 //        return filteredTeamsList;
 //    }
-
 
 
 }

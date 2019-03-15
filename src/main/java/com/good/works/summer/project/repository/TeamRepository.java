@@ -12,21 +12,4 @@ public interface TeamRepository extends CrudRepository<Team, Integer> {
 
     List<Team> findAll();
 
-//    boolean existsTeamByLeadName(String leadName);
-//
-//    boolean existsTeamByLeadEmail(String leadEmail);
-//
-//    boolean existsTeamByTeamName(String teamName);
-//
-//    boolean existsTeamByCity(City city);
-//
-//    boolean existsTeamByOrganization(String organization);
-//
-//    //List<Team> findTeamsByCityAndOrganization(City city, String organization);
-//
-//    List<Team> findTeamByOrganization(String organization);
-//
-//    List<Team> findTeamByCity(City city);
-
-
 }

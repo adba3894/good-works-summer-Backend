@@ -5,10 +5,6 @@ public class SecurityConstants {
     public static final long EXPIRATION_TIME = 864_000_000; // 10 days
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
-<<<<<<< HEAD
     public static final String SIGN_UP_URL = "/signup";
-=======
-    public static final String SIGN_UP_URL = "/users/sign-up";
->>>>>>> add200cef195d3d19593a5f7bbb171af282c273b
     public static final String LOGIN_URL = "/login";
 }

@@ -2,11 +2,7 @@ package com.good.works.summer.project.security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-<<<<<<< HEAD
 import com.good.works.summer.project.entities.Admin;
-=======
-import com.good.works.summer.project.entities.ApplicationUser;
->>>>>>> add200cef195d3d19593a5f7bbb171af282c273b
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,13 +32,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req,
                                                 HttpServletResponse res) throws AuthenticationException {
         try {
-<<<<<<< HEAD
             Admin creds = new ObjectMapper()
                     .readValue(req.getInputStream(), Admin.class);
-=======
-            ApplicationUser creds = new ObjectMapper()
-                    .readValue(req.getInputStream(), ApplicationUser.class);
->>>>>>> add200cef195d3d19593a5f7bbb171af282c273b
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
