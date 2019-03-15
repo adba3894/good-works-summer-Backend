@@ -21,7 +21,6 @@ apply plugin: "io.spring.dependency-management"
 group = "com.example"
 version = "0.1.0"
 
-
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     testCompile('org.springframework.boot:spring-boot-starter-test')
