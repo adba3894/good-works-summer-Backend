@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 //@Table(name = "team", uniqueConstraints = {
 //        @UniqueConstraint(name = "uniqueTeamConstraint", columnNames = {"leadName","teamName", "leadEmail", "city_id", "organization", "team_id"})})
-@Table(name="team")
+@Table(name = "team")
 public class Team {
 
     @Id
@@ -34,7 +34,7 @@ public class Team {
     @Size(max = 30)
     private String teamName;
 
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id")
     private List<Idea> ideas;
 
@@ -45,7 +45,8 @@ public class Team {
         this.ideas = ideas;
     }
 
-    public Team(){}
+    public Team() {
+    }
 
     public int getId() {
         return id;
@@ -86,7 +87,6 @@ public class Team {
     public void setIdeas(List<Idea> ideas) {
         this.ideas = ideas;
     }
-
 
 
 }

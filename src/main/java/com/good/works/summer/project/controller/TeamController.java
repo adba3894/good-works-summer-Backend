@@ -20,19 +20,21 @@ public class TeamController {
 
     @PostMapping(value = "/register")
     public Team registerTeam(@RequestBody Team team) throws UniqueTeamException, TeamSizeException {
-        //teamService.validateTeamUniqueness(team);
+        teamService.validateTeamUniqueness(team);
         //teamService.ifOrganizationHasMoreThanFiveTeamsInSameCity(team);
         return teamService.createTeam(team);
     }
 
-//    @GetMapping(value = "/teams/filter/{categoryName}")
-//    public List<Team> filtered(@PathVariable String categoryName){
-//        return teamService.filterTeamsByCategory(Category.valueOf(categoryName));
-//    }
+    @GetMapping(value = "/teams/filter/{categoryName}")
+    public List<Team> filtered(@PathVariable String categoryName){
+        return teamService.filterTeamsByCategory(Category.valueOf(categoryName));
+    }
 
     @GetMapping(value="/teams")
     public List<Team> listAllTeams(){
         return teamService.getAllTeams();
     }
+
+
 
 }

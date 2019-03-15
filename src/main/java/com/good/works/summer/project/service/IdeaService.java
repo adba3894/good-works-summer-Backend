@@ -17,5 +17,8 @@ public class IdeaService {
         return ideaRepository.findAll();
     }
 
+    public Idea addIdea(Idea idea) {
+        return ideaRepository.save(idea);
+    }
 
 }

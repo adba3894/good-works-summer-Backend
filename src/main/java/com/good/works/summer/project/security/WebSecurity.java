@@ -1,6 +1,5 @@
 package com.good.works.summer.project.security;
 
-
 import com.good.works.summer.project.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +27,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public WebSecurity(AdminService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -37,8 +35,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL, LOGIN_URL,"/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/teams","/ideas","/projects", "/cities","/categories","/teams/filter/**").permitAll()
+                .antMatchers(HttpMethod.POST, SIGN_UP_URL, LOGIN_URL, "/register", "/ideas/add").permitAll()
+                .antMatchers(HttpMethod.GET, "/teams", "/ideas", "/projects", "/cities", "/categories", "/teams/filter/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/projects/approve/**", "/projects/done/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
@@ -51,10 +50,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+//        return source;
+//    }
 }

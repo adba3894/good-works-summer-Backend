@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,19 +46,20 @@ public class TeamService {
         return projectRepository.findAll();
     }
 
-//    public void validateTeamUniqueness(Team teamToCheck) throws UniqueTeamException {
-//        List<Team> teams = teamRepository.findAll();
-//        for (Team team : teams) {
-//            if (checkTeamNameEquality(team, teamToCheck)
-//                    && checkTeamLeadNameEquality(team, teamToCheck)
-//                    && checkLeadEmailEquality(team, teamToCheck)
-//                    && checkCityEquality(team, teamToCheck)
-//                    && checkOrganizationEquality(team, teamToCheck)
-//                    && checkIdeaAndCategoryEquality(team, teamToCheck)) {
-//                throw new UniqueTeamException();
-//            }
-//        }
-//    }
+    //Main validation method
+    public void validateTeamUniqueness(Team teamToCheck) throws UniqueTeamException {
+        List<Team> teams = teamRepository.findAll();
+        for (Team team : teams) {
+            if (checkTeamNameEquality(team, teamToCheck)
+                    && checkTeamLeadNameEquality(team, teamToCheck)
+                    && checkLeadEmailEquality(team, teamToCheck)
+                    && checkCityEquality(team, teamToCheck)
+                    && checkOrganizationEquality(team, teamToCheck)
+                    && checkIdeaAndCategoryEquality(team, teamToCheck)) {
+                throw new UniqueTeamException();
+            }
+        }
+    }
 
     public boolean checkTeamNameEquality(Team team, Team teamToCheck) {
         return team.getTeamName().equals(teamToCheck.getTeamName());
@@ -72,10 +74,6 @@ public class TeamService {
     }
 
     public boolean checkCityEquality(Team team, Team teamToCheck) {
-//        return team.getCity().getId() == (teamToCheck.getCity().getId());
-//        return team.getIdeas().stream()
-//                .filter(e->e.getCity().getId()==teamToCheck.getIdeas().stream())
-
         for (Idea idea : team.getIdeas()) {
             for (Idea ideaToCheck : teamToCheck.getIdeas()) {
                 if (idea.getCity().getId() == ideaToCheck.getCity().getId()) {
@@ -86,12 +84,21 @@ public class TeamService {
         return false;
     }
 
-//    public boolean checkOrganizationEquality(Team team, Team teamToCheck) {
-//        return team.getOrganization().equals(teamToCheck.getOrganization());
-//    }
+
+    public boolean checkOrganizationEquality(Team team, Team teamToCheck) {
+        for (Idea idea : team.getIdeas()) {
+            for (Idea ideaToCheck : teamToCheck.getIdeas()) {
+                if (idea.getOrganization().equals(ideaToCheck.getOrganization())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public boolean checkIdeaAndCategoryEquality(Team team, Team teamToCheck) {
         return ifTeamWithSameIdeaAndCategoryExists(team, teamToCheck);
+
     }
 
     public boolean ifTeamWithSameIdeaAndCategoryExists(Team team, Team teamToCheck) {
@@ -114,25 +121,29 @@ public class TeamService {
     }
 
 //    public void ifOrganizationHasMoreThanFiveTeamsInSameCity(Team team) throws TeamSizeException {
-//        List<Team> teamList = teamRepository.findTeamByCity(team.getCity());
-//        teamList = teamList.stream()
-//                .filter(var -> var.getOrganization().equals(team.getOrganization()))
-//                .collect(Collectors.toList());
-//
-//        if (teamList.size() >= 5) {
+//        List<Team> teamList = teamRepository.findAll();
+//        List<Team> temporaryList = new ArrayList<>();
+//        for(Team team1: teamList){
+//            for(int i = 0; i < team1.getIdeas().size();i++){
+//                if(team1.getIdeas().get(i).getCity().equals(team.getIdeas().get(i).getCity())){
+//                    temporaryList.add(team);
+//                }
+//            }
+//        }
+//        if (temporaryList.size() >= 5) {
 //            throw new TeamSizeException();
 //        }
 //    }
 
 
-//    public List<Team> filterTeamsByCategory(Category categoryTitle){
-//        List<Team> filteredTeamsList = teamRepository.findAll();
-//        filteredTeamsList = filteredTeamsList.stream()
-//                .filter(team -> team.getIdeas().stream()
-//                        .anyMatch(idea -> idea.getProject().getCategory().equals(categoryTitle)))
-//                .collect(Collectors.toList());
-//        return filteredTeamsList;
-//    }
+    public List<Team> filterTeamsByCategory(Category categoryTitle) {
+        List<Team> filteredTeamsList = teamRepository.findAll();
+        filteredTeamsList = filteredTeamsList.stream()
+                .filter(team -> team.getIdeas().stream()
+                        .anyMatch(idea -> idea.getCategory().equals(categoryTitle) && idea.getProject().isApproved()))
+                .collect(Collectors.toList());
+        return filteredTeamsList;
+    }
 
 
 }

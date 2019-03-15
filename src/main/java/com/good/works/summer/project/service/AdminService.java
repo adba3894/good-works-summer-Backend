@@ -30,7 +30,7 @@ public class AdminService implements UserDetailsService {
         return new User(admin.getUsername(), admin.getPassword(), emptyList());
     }
 
-    public void saveUser(Admin user){
+    public void saveUser(Admin user) {
         adminRepository.save(user);
     }
 

@@ -5,11 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.good.works.summer.project.enums.Category;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="idea")
+@Table(name = "idea")
 public class Idea {
 
     @Id
@@ -20,8 +21,8 @@ public class Idea {
     @NotNull
     private String description;
 
-    @OneToOne(cascade =  CascadeType.ALL)
-    @JoinColumn(name="project_id", referencedColumnName = "project_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private Project project;
 
     @ManyToOne
@@ -40,7 +41,8 @@ public class Idea {
     @JoinColumn(name = "city_id")
     private City city;
 
-    public Idea(){}
+    public Idea() {
+    }
 
     public Idea(@NotNull String description, Project project, Team team, @NotNull String organization, @NotNull Category category, City city) {
         this.description = description;
@@ -106,7 +108,6 @@ public class Idea {
     public void setProject(Project project) {
         this.project = project;
     }
-
 
 
 }

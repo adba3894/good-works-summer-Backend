@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.bytebuddy.implementation.bind.annotation.Default;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "project")
-public class  Project {
+public class Project {
 
     @Id
     @Column(name = "project_id")
@@ -22,7 +23,7 @@ public class  Project {
     private Idea idea;
 
     @ManyToOne
-    @JoinColumn(name = "team_id",referencedColumnName = "team_id")
+    @JoinColumn(name = "team_id", referencedColumnName = "team_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Team team;
@@ -42,7 +43,8 @@ public class  Project {
         this.isDone = isDone;
     }
 
-    public Project(){}
+    public Project() {
+    }
 
     public boolean isDone() {
         return isDone;

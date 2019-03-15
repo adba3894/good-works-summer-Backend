@@ -21,7 +21,6 @@ public class AdminController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-
     @PostMapping("/signup")
     public void signUp(@RequestBody Admin user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
