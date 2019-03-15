@@ -2,13 +2,15 @@ package com.good.works.summer.project.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.good.works.summer.project.enums.Category;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="idea")
+@Table(name = "idea")
 public class Idea {
 
     @Id
@@ -19,8 +21,8 @@ public class Idea {
     @NotNull
     private String description;
 
-    @OneToOne(cascade =  CascadeType.ALL)
-    @JoinColumn(name="project_id", referencedColumnName = "project_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private Project project;
 
     @ManyToOne
@@ -29,12 +31,50 @@ public class Idea {
     @JsonIgnore
     private Team team;
 
-    public Idea(){}
+    @NotNull
+    private String organization;
 
-    public Idea(String description, Project project, Team team) {
+    @NotNull
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
+    public Idea() {
+    }
+
+    public Idea(@NotNull String description, Project project, Team team, @NotNull String organization, @NotNull Category category, City city) {
         this.description = description;
         this.project = project;
         this.team = team;
+        this.organization = organization;
+        this.category = category;
+        this.city = city;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 
     public int getId() {
@@ -68,7 +108,6 @@ public class Idea {
     public void setProject(Project project) {
         this.project = project;
     }
-
 
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 //@Table(name = "team", uniqueConstraints = {
 //        @UniqueConstraint(name = "uniqueTeamConstraint", columnNames = {"leadName","teamName", "leadEmail", "city_id", "organization", "team_id"})})
-@Table(name="team")
+@Table(name = "team")
 public class Team {
 
     @Id
@@ -34,36 +34,19 @@ public class Team {
     @Size(max = 30)
     private String teamName;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
-
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id")
     private List<Idea> ideas;
 
-    @NotNull
-    @NotEmpty
-    private String organization;
-
-    public String getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(String organization) {
-        this.organization = organization;
-    }
-
-    public Team(String leadName, @Email String leadEmail, String teamName, City city, List<Idea> ideas, String organization) {
+    public Team(@NotNull @NotEmpty @Size(max = 30) String leadName, @NotNull @NotEmpty @Email(message = "email must contain '@' symbol") String leadEmail, @NotNull @NotEmpty @Size(max = 30) String teamName, List<Idea> ideas) {
         this.leadName = leadName;
         this.leadEmail = leadEmail;
         this.teamName = teamName;
-        this.city = city;
         this.ideas = ideas;
-        this.organization = organization;
     }
 
-    public Team(){}
+    public Team() {
+    }
 
     public int getId() {
         return id;
@@ -97,14 +80,6 @@ public class Team {
         this.teamName = teamName;
     }
 
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
     public List<Idea> getIdeas() {
         return ideas;
     }
@@ -112,7 +87,6 @@ public class Team {
     public void setIdeas(List<Idea> ideas) {
         this.ideas = ideas;
     }
-
 
 
 }

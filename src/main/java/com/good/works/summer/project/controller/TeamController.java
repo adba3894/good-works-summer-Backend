@@ -18,10 +18,10 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
-    @PostMapping(value = "/registration")
+    @PostMapping(value = "/register")
     public Team registerTeam(@RequestBody Team team) throws UniqueTeamException, TeamSizeException {
-        //teamService.validateTeamUniqueness(team);
-        teamService.ifOrganizationHasMoreThanFiveTeamsInSameCity(team);
+        teamService.validateTeamUniqueness(team);
+        //teamService.ifOrganizationHasMoreThanFiveTeamsInSameCity(team);
         return teamService.createTeam(team);
     }
 
@@ -35,14 +35,6 @@ public class TeamController {
         return teamService.getAllTeams();
     }
 
-    @GetMapping(value="/ideas")
-    public List<Idea> listAllIdeas(){
-        return teamService.getAllIdeas();
-    }
 
-    @GetMapping(value="/projects")
-    public List<Project> listAllProjects(){
-        return teamService.getAllProjects();
-    }
 
 }

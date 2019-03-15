@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,15 +74,31 @@ public class TeamService {
     }
 
     public boolean checkCityEquality(Team team, Team teamToCheck) {
-        return team.getCity().getId() == (teamToCheck.getCity().getId());
+        for (Idea idea : team.getIdeas()) {
+            for (Idea ideaToCheck : teamToCheck.getIdeas()) {
+                if (idea.getCity().getId() == ideaToCheck.getCity().getId()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
+
     public boolean checkOrganizationEquality(Team team, Team teamToCheck) {
-        return team.getOrganization().equals(teamToCheck.getOrganization());
+        for (Idea idea : team.getIdeas()) {
+            for (Idea ideaToCheck : teamToCheck.getIdeas()) {
+                if (idea.getOrganization().equals(ideaToCheck.getOrganization())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean checkIdeaAndCategoryEquality(Team team, Team teamToCheck) {
         return ifTeamWithSameIdeaAndCategoryExists(team, teamToCheck);
+
     }
 
     public boolean ifTeamWithSameIdeaAndCategoryExists(Team team, Team teamToCheck) {
@@ -100,30 +117,33 @@ public class TeamService {
     }
 
     public boolean checkCategoriesEquality(Idea idea, Idea ideaToCheck) {
-        return idea.getProject().getCategory().equals(ideaToCheck.getProject().getCategory());
+        return idea.getCategory().equals(ideaToCheck.getCategory());
     }
 
-    public void ifOrganizationHasMoreThanFiveTeamsInSameCity(Team team) throws TeamSizeException {
-        List<Team> teamList = teamRepository.findTeamByCity(team.getCity());
-        teamList = teamList.stream()
-                .filter(var -> var.getOrganization().equals(team.getOrganization()))
-                .collect(Collectors.toList());
+//    public void ifOrganizationHasMoreThanFiveTeamsInSameCity(Team team) throws TeamSizeException {
+//        List<Team> teamList = teamRepository.findAll();
+//        List<Team> temporaryList = new ArrayList<>();
+//        for(Team team1: teamList){
+//            for(int i = 0; i < team1.getIdeas().size();i++){
+//                if(team1.getIdeas().get(i).getCity().equals(team.getIdeas().get(i).getCity())){
+//                    temporaryList.add(team);
+//                }
+//            }
+//        }
+//        if (temporaryList.size() >= 5) {
+//            throw new TeamSizeException();
+//        }
+//    }
 
-        if (teamList.size() >= 5) {
-            throw new TeamSizeException();
-        }
-    }
 
-
-    public List<Team> filterTeamsByCategory(Category categoryTitle){
+    public List<Team> filterTeamsByCategory(Category categoryTitle) {
         List<Team> filteredTeamsList = teamRepository.findAll();
         filteredTeamsList = filteredTeamsList.stream()
                 .filter(team -> team.getIdeas().stream()
-                        .anyMatch(idea -> idea.getProject().getCategory().equals(categoryTitle)))
+                        .anyMatch(idea -> idea.getCategory().equals(categoryTitle) && idea.getProject().isApproved()))
                 .collect(Collectors.toList());
         return filteredTeamsList;
     }
-
 
 
 }
