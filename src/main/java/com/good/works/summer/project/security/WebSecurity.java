@@ -1,7 +1,7 @@
 package com.good.works.summer.project.security;
 
 
-import com.good.works.summer.project.service.UserDetailsServiceImpl;
+import com.good.works.summer.project.service.AdminDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -23,11 +23,11 @@ import static com.good.works.summer.project.constants.SecurityConstants.SIGN_UP_
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private AdminDetailsServiceImpl userDetailsService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public WebSecurity(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public WebSecurity(AdminDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -36,10 +36,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL, LOGIN_URL,"/registration/**").permitAll()
+                .antMatchers(HttpMethod.POST, SIGN_UP_URL, LOGIN_URL,"/registration").permitAll()
                 .antMatchers(HttpMethod.GET, "/teams","/ideas","/projects", "/initialdata/**").permitAll()
                 //rasydamas sia eilute apacioj tikiuos kad pavyks papostint i registration, bet nepaeina
-                .antMatchers(HttpMethod.POST,"/registration/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
