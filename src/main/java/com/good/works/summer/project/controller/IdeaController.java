@@ -38,9 +38,14 @@ public class IdeaController {
         return ideaService.filterIdeasByCategory(Category.valueOf(category));
     }
 
-    @GetMapping(value = "/ideas/free")
-    public List<Idea> filterIdeasWithNoProject(){
-        return ideaService.filterIdeasWithNoProject();
+    @GetMapping(value = "/ideas/filter/{category}/free")
+    public List<Idea> filterIdeasWithNoProject(@PathVariable String category){
+        return ideaService.filterIdeasByCategoryWithNoProject(Category.valueOf(category));
     }
+
+//    @GetMapping(value = "/ideas/free")
+//    public List<Idea> filterIdeasWithNoProject(){
+//        return ideaService.filterIdeasWithNoProject();
+//    }
 
 }

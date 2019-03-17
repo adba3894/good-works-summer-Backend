@@ -43,8 +43,8 @@ public class IdeaService {
         return filteredIdeasList;
     }
 
-    public List<Idea> filterIdeasWithNoProject(){
-        List<Idea> ideas = ideaRepository.findAll();
+    public List<Idea> filterIdeasByCategoryWithNoProject(Category categoryTitle){
+        List<Idea> ideas = filterIdeasByCategory(categoryTitle);
         List<Idea> filteredIdeas = new ArrayList<>();
         for(Idea idea: ideas){
             if(idea.getProject() == null){
@@ -53,5 +53,17 @@ public class IdeaService {
         }
         return filteredIdeas;
     }
+
+
+//    public List<Idea> filterIdeasWithNoProject(){
+//        List<Idea> ideas = ideaRepository.findAll();
+//        List<Idea> filteredIdeas = new ArrayList<>();
+//        for(Idea idea: ideas){
+//            if(idea.getProject() == null){
+//                filteredIdeas.add(idea);
+//            }
+//        }
+//        return filteredIdeas;
+//    }
 
 }
