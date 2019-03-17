@@ -1,7 +1,6 @@
 package com.good.works.summer.project.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import net.bytebuddy.implementation.bind.annotation.Default;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 

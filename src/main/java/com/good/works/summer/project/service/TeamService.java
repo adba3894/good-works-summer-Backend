@@ -1,6 +1,5 @@
 package com.good.works.summer.project.service;
 
-import com.good.works.summer.project.entities.City;
 import com.good.works.summer.project.entities.Idea;
 import com.good.works.summer.project.entities.Project;
 import com.good.works.summer.project.entities.Team;
@@ -12,7 +11,6 @@ import com.good.works.summer.project.repository.ProjectRepository;
 import com.good.works.summer.project.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

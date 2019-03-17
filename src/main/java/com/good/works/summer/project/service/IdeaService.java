@@ -1,13 +1,13 @@
 package com.good.works.summer.project.service;
 
 import com.good.works.summer.project.entities.Idea;
-import com.good.works.summer.project.entities.Team;
 import com.good.works.summer.project.enums.Category;
 import com.good.works.summer.project.exceptions.UniqueIdeaException;
 import com.good.works.summer.project.repository.IdeaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +22,7 @@ public class IdeaService {
     }
 
     public Idea addIdea(Idea idea) {
+        idea.setProject(null);
         return ideaRepository.save(idea);
     }
 
@@ -41,4 +42,16 @@ public class IdeaService {
                 .collect(Collectors.toList());
         return filteredIdeasList;
     }
+
+    public List<Idea> filterIdeasWithNoProject(){
+        List<Idea> ideas = ideaRepository.findAll();
+        List<Idea> filteredIdeas = new ArrayList<>();
+        for(Idea idea: ideas){
+            if(idea.getProject() == null){
+                filteredIdeas.add(idea);
+            }
+        }
+        return filteredIdeas;
+    }
+
 }

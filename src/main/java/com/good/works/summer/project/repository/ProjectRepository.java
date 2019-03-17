@@ -1,8 +1,6 @@
 package com.good.works.summer.project.repository;
 
-import com.good.works.summer.project.entities.Idea;
 import com.good.works.summer.project.entities.Project;
-import com.good.works.summer.project.entities.Team;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
