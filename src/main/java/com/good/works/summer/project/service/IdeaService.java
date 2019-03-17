@@ -1,11 +1,15 @@
 package com.good.works.summer.project.service;
 
 import com.good.works.summer.project.entities.Idea;
+import com.good.works.summer.project.entities.Team;
+import com.good.works.summer.project.enums.Category;
+import com.good.works.summer.project.exceptions.UniqueIdeaException;
 import com.good.works.summer.project.repository.IdeaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IdeaService {
@@ -21,4 +25,20 @@ public class IdeaService {
         return ideaRepository.save(idea);
     }
 
+    public void validateIdeaUniqueness(Idea ideaToValidate) throws UniqueIdeaException {
+        List<Idea> ideas = ideaRepository.findAll();
+        for (Idea idea : ideas) {
+            if (idea.getDescription().equals(ideaToValidate.getDescription())) {
+                throw new UniqueIdeaException();
+            }
+        }
+    }
+
+    public List<Idea> filterIdeasByCategory(Category categoryTitle) {
+        List<Idea> filteredIdeasList = ideaRepository.findAll();
+        filteredIdeasList = filteredIdeasList.stream()
+                .filter(idea -> idea.getCategory().equals(categoryTitle))
+                .collect(Collectors.toList());
+        return filteredIdeasList;
+    }
 }

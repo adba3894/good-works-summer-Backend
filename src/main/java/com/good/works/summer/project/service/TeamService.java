@@ -1,5 +1,6 @@
 package com.good.works.summer.project.service;
 
+import com.good.works.summer.project.entities.City;
 import com.good.works.summer.project.entities.Idea;
 import com.good.works.summer.project.entities.Project;
 import com.good.works.summer.project.entities.Team;
@@ -120,20 +121,22 @@ public class TeamService {
         return idea.getCategory().equals(ideaToCheck.getCategory());
     }
 
-//    public void ifOrganizationHasMoreThanFiveTeamsInSameCity(Team team) throws TeamSizeException {
-//        List<Team> teamList = teamRepository.findAll();
-//        List<Team> temporaryList = new ArrayList<>();
-//        for(Team team1: teamList){
-//            for(int i = 0; i < team1.getIdeas().size();i++){
-//                if(team1.getIdeas().get(i).getCity().equals(team.getIdeas().get(i).getCity())){
-//                    temporaryList.add(team);
-//                }
-//            }
-//        }
-//        if (temporaryList.size() >= 5) {
-//            throw new TeamSizeException();
-//        }
-//    }
+    public void ifOrganizationHasMoreThanFiveTeamsInSameCity(Team teamToCheck) throws TeamSizeException {
+        int resultChecker = 0;
+        for (Team iteratingTeam : getAllTeams()) {
+            for (Idea iteratingIdea : iteratingTeam.getIdeas()) {
+                for (Idea ideaToCheck : teamToCheck.getIdeas()) {
+                    if (iteratingIdea.getOrganization().equals(ideaToCheck.getOrganization())
+                            && iteratingIdea.getCity().getId() == ideaToCheck.getCity().getId()) {
+                        resultChecker++;
+                    }
+                }
+            }
+        }
+        if (resultChecker >= 5) {
+            throw new TeamSizeException();
+        }
+    }
 
 
     public List<Team> filterTeamsByCategory(Category categoryTitle) {
