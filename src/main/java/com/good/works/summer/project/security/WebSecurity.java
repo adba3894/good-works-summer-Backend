@@ -14,9 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import static com.good.works.summer.project.constants.SecurityConstants.LOGIN_URL;
 import static com.good.works.summer.project.constants.SecurityConstants.SIGN_UP_URL;
@@ -36,23 +33,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
-            }
-        };
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL, LOGIN_URL, "/register", "/ideas/add").permitAll()
-                .antMatchers(HttpMethod.GET, "/teams", "/ideas", "/projects", "/cities", "/categories", "/teams/filter/**", "/ideas/filter/**", "/ideas/free","/projects/counter", "/ideas/done").permitAll()
+                .antMatchers(HttpMethod.GET, "/teams", "/ideas", "/projects", "/cities", "/categories", "/teams/filter/**", "/ideas/filter/**", "/ideas/free", "/projects/counter", "/ideas/done").permitAll()
                 .antMatchers(HttpMethod.PUT, "/projects/approve/**", "/projects/done/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
