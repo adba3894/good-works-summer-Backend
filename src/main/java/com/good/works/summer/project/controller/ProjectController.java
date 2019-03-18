@@ -17,7 +17,7 @@ import java.util.List;
 public class ProjectController {
 
     @Autowired
-    ProjectService projectService;
+    private ProjectService projectService;
 
 
     @GetMapping(value = "/projects")
@@ -35,6 +35,11 @@ public class ProjectController {
     @PutMapping(value = "/projects/done/{id}")
     public void makeProjectDone(@PathVariable int id) throws ProjectNotApprovedException {
         projectService.markDoneByID(id);
+    }
+
+    @GetMapping(value = "/projects/counter")
+    public int getDonePercentage(){
+        return projectService.calculatePercentage();
     }
 
 }

@@ -14,10 +14,6 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
     @PostMapping("/signup")
     public void signUp(@RequestBody Admin admin) {
         adminService.encryptPassword(admin);

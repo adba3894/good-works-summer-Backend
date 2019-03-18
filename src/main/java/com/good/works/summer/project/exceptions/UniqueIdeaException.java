@@ -9,5 +9,4 @@ public class UniqueIdeaException extends Exception {
     public UniqueIdeaException() {
         super("Idea with same description exists!");
     }
-
 }

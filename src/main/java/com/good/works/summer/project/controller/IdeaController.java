@@ -48,4 +48,9 @@ public class IdeaController {
         return ideaService.filterIdeasWithNoProject();
     }
 
+    @GetMapping(value = "/ideas/done")
+    public List<Idea> filterIdeasWithDoneProjects(){
+        return ideaService.filterIdeasWithDoneProject();
+    }
+
 }

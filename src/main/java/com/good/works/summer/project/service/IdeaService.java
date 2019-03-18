@@ -34,7 +34,7 @@ public class IdeaService {
             }
         }
     }
-    //isrikiuot pagal ID
+
     public List<Idea> filterIdeasByCategory(Category categoryTitle) {
         List<Idea> filteredIdeasList = ideaRepository.findAll();
         filteredIdeasList = filteredIdeasList.stream()
@@ -62,4 +62,16 @@ public class IdeaService {
         }
         return filteredIdeas;
     }
+
+    public List<Idea> filterIdeasWithDoneProject() {
+        List<Idea> ideas = getAllIdeas();
+        List<Idea> filteredList = new ArrayList<>();
+        for (Idea idea : ideas) {
+            if (idea.getProject().isDone() == true) {
+                filteredList.add(idea);
+            }
+        }
+        return filteredList;
+    }
+
 }
