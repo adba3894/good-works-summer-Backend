@@ -10,6 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.servlet.*;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
 import static com.good.works.summer.project.constants.SecurityConstants.LOGIN_URL;
 import static com.good.works.summer.project.constants.SecurityConstants.SIGN_UP_URL;
 
@@ -45,6 +50,19 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
+
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) res;
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        chain.doFilter(req, res);
+    }
+
+    public void init(FilterConfig filterConfig) {}
+
+    public void destroy() {}
 
 //    @Bean
 //    CorsConfigurationSource corsConfigurationSource() {
