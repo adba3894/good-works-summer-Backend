@@ -12,8 +12,6 @@ import com.good.works.summer.project.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +43,6 @@ public class TeamService {
         return projectRepository.findAll();
     }
 
-    //Main validation method
     public void validateTeamUniqueness(Team teamToCheck) throws UniqueTeamException {
         List<Team> teams = teamRepository.findAll();
         for (Team team : teams) {

@@ -19,8 +19,8 @@ public class AdminController {
 
 
     @PostMapping("/signup")
-    public void signUp(@RequestBody Admin user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        adminService.saveUser(user);
+    public void signUp(@RequestBody Admin admin) {
+        adminService.encryptPassword(admin);
+        adminService.saveAdmin(admin);
     }
 }

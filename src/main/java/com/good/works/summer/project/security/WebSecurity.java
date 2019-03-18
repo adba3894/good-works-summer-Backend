@@ -43,7 +43,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL, LOGIN_URL, "/register", "/ideas/add").permitAll()
-                .antMatchers(HttpMethod.GET, "/teams", "/ideas", "/projects", "/cities", "/categories", "/teams/filter/**","/ideas/filter/**", "/ideas/free").permitAll()
+                .antMatchers(HttpMethod.GET, "/teams", "/ideas", "/projects", "/cities", "/categories", "/teams/filter/**", "/ideas/filter/**", "/ideas/free").permitAll()
                 .antMatchers(HttpMethod.PUT, "/projects/approve/**", "/projects/done/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -56,7 +56,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
-
 
 
     @Bean
