@@ -34,7 +34,7 @@ public class IdeaService {
             }
         }
     }
-
+    //isrikiuot pagal ID
     public List<Idea> filterIdeasByCategory(Category categoryTitle) {
         List<Idea> filteredIdeasList = ideaRepository.findAll();
         filteredIdeasList = filteredIdeasList.stream()

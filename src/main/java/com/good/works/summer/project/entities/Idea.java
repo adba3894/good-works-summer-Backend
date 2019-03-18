@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "idea")
@@ -18,6 +19,7 @@ public class Idea {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Size(max=240)
     @NotNull
     private String description;
 
@@ -32,6 +34,7 @@ public class Idea {
     private Team team;
 
     @NotNull
+    @Size(max=100)
     private String organization;
 
     @NotNull
@@ -108,6 +111,5 @@ public class Idea {
     public void setProject(Project project) {
         this.project = project;
     }
-
 
 }

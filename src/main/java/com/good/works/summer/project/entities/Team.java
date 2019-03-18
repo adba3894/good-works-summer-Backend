@@ -21,7 +21,7 @@ public class Team {
 
     @NotNull
     @NotEmpty
-    @Size(max = 30)
+    @Size(max = 100)
     private String leadName;
 
     @NotNull
@@ -31,7 +31,7 @@ public class Team {
 
     @NotNull
     @NotEmpty
-    @Size(max = 30)
+    @Size(max = 100)
     private String teamName;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -87,6 +87,5 @@ public class Team {
     public void setIdeas(List<Idea> ideas) {
         this.ideas = ideas;
     }
-
 
 }

@@ -34,8 +34,8 @@ public class AdminService implements UserDetailsService {
         return new User(admin.getUsername(), admin.getPassword(), emptyList());
     }
 
-    public void saveAdmin(Admin user) {
-        adminRepository.save(user);
+    public void saveAdmin(Admin admin) {
+        adminRepository.save(admin);
     }
 
     public void encryptPassword(Admin admin) {
