@@ -23,10 +23,10 @@ public class TeamService {
     public IdeaRepository ideaRepository;
 
     public Team createTeam(Team team) throws UniqueTeamException, TeamSizeException{
-        Team teamToCreate = assignIdeaToTeam(team);
-        validateTeamUniqueness(teamToCreate);
-        doesOrganizationHasMoreThanFiveTeamsInSameCity(teamToCreate);
-        return teamRepository.save(teamToCreate);
+        //Team teamToCreate = assignIdeaToTeam(team);
+        validateTeamUniqueness(team);
+        doesOrganizationHasMoreThanFiveTeamsInSameCity(team);
+        return teamRepository.save(team);
     }
 
     public List<Team> getAllTeams() {
@@ -153,6 +153,9 @@ public class TeamService {
         for (Idea idea : ideas) {
             if(idea.getId()!=0){
                 team.setIdeas(ideaRepository.findAllById(idea.getId()));
+//                for (Idea ideaToAddProject: ideaRepository.findAllById(idea.getId())){
+//                    ideaToAddProject.setProject(idea.getProject());
+//                }
             }
         }
         return team;

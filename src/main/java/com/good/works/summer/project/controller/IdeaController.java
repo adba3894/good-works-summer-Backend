@@ -29,7 +29,6 @@ public class IdeaController {
 
     @PostMapping(value = "/ideas/add")
     public void addNewIdea(@RequestBody Idea idea) throws UniqueIdeaException {
-        ideaService.validateIdeaUniqueness(idea);
         ideaService.addIdea(idea);
     }
 

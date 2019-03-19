@@ -4,7 +4,6 @@ import com.good.works.summer.project.entities.Team;
 import com.good.works.summer.project.enums.Category;
 import com.good.works.summer.project.exceptions.TeamSizeException;
 import com.good.works.summer.project.exceptions.UniqueTeamException;
-import com.good.works.summer.project.service.IdeaService;
 import com.good.works.summer.project.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +17,9 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
-    @Autowired
-    private IdeaService ideaService;
 
     @PostMapping(value = "/register")
     public Team registerTeam(@RequestBody Team team) throws UniqueTeamException, TeamSizeException {
-        teamService.doesOrganizationHasMoreThanFiveTeamsInSameCity(team);
         return teamService.createTeam(team);
     }
 

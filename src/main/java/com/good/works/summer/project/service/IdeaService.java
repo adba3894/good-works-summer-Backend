@@ -21,8 +21,9 @@ public class IdeaService {
         return ideaRepository.findAll();
     }
 
-    public Idea addIdea(Idea idea) {
-        //idea.setProject(null);
+    public Idea addIdea(Idea idea) throws UniqueIdeaException{
+        validateIdeaUniqueness(idea);
+        idea.setProject(null); //****
         return ideaRepository.save(idea);
     }
 
