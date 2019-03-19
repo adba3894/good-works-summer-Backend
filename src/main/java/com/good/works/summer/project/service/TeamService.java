@@ -5,6 +5,7 @@ import com.good.works.summer.project.entities.Team;
 import com.good.works.summer.project.enums.Category;
 import com.good.works.summer.project.exceptions.TeamSizeException;
 import com.good.works.summer.project.exceptions.UniqueTeamException;
+import com.good.works.summer.project.repository.IdeaRepository;
 import com.good.works.summer.project.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,14 @@ public class TeamService {
     @Autowired
     public TeamRepository teamRepository;
 
-    public Team createTeam(Team team) {
-        return teamRepository.save(team);
+    @Autowired
+    public IdeaRepository ideaRepository;
+
+    public Team createTeam(Team team) throws UniqueTeamException, TeamSizeException{
+        Team teamToCreate = assignIdeaToTeam(team);
+        validateTeamUniqueness(teamToCreate);
+        doesOrganizationHasMoreThanFiveTeamsInSameCity(teamToCreate);
+        return teamRepository.save(teamToCreate);
     }
 
     public List<Team> getAllTeams() {
@@ -90,11 +97,11 @@ public class TeamService {
     }
 
     public boolean checkIdeaAndCategoryEquality(Team team, Team teamToCheck) {
-        return ifTeamWithSameIdeaAndCategoryExists(team, teamToCheck);
+        return doesTeamWithSameIdeaAndCategoryExists(team, teamToCheck);
 
     }
 
-    public boolean ifTeamWithSameIdeaAndCategoryExists(Team team, Team teamToCheck) {
+    public boolean doesTeamWithSameIdeaAndCategoryExists(Team team, Team teamToCheck) {
         for (Idea idea : team.getIdeas()) {
             for (Idea ideaToCheck : teamToCheck.getIdeas()) {
                 if (checkIdeasEquality(idea, ideaToCheck) && checkCategoriesEquality(idea, ideaToCheck)) {
@@ -113,7 +120,7 @@ public class TeamService {
         return idea.getCategory().equals(ideaToCheck.getCategory());
     }
 
-    public void ifOrganizationHasMoreThanFiveTeamsInSameCity(Team teamToCheck) throws TeamSizeException {
+    public void doesOrganizationHasMoreThanFiveTeamsInSameCity(Team teamToCheck) throws TeamSizeException {
         int resultChecker = 0;
         for (Team iteratingTeam : getAllTeams()) {
             for (Idea iteratingIdea : iteratingTeam.getIdeas()) {
@@ -139,6 +146,16 @@ public class TeamService {
                 .sorted((a, b) -> b.getId() - a.getId())
                 .collect(Collectors.toList());
         return filteredTeamsList;
+    }
+
+    public Team assignIdeaToTeam(Team team){
+        List<Idea> ideas = team.getIdeas();
+        for (Idea idea : ideas) {
+            if(idea.getId()!=0){
+                team.setIdeas(ideaRepository.findAllById(idea.getId()));
+            }
+        }
+        return team;
     }
 
 }

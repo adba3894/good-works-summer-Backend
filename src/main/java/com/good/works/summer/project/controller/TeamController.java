@@ -1,11 +1,10 @@
 package com.good.works.summer.project.controller;
 
-import com.good.works.summer.project.entities.Idea;
-import com.good.works.summer.project.entities.Project;
 import com.good.works.summer.project.entities.Team;
 import com.good.works.summer.project.enums.Category;
 import com.good.works.summer.project.exceptions.TeamSizeException;
 import com.good.works.summer.project.exceptions.UniqueTeamException;
+import com.good.works.summer.project.service.IdeaService;
 import com.good.works.summer.project.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +18,12 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private IdeaService ideaService;
+
     @PostMapping(value = "/register")
     public Team registerTeam(@RequestBody Team team) throws UniqueTeamException, TeamSizeException {
-        teamService.validateTeamUniqueness(team);
-        teamService.ifOrganizationHasMoreThanFiveTeamsInSameCity(team);
+        teamService.doesOrganizationHasMoreThanFiveTeamsInSameCity(team);
         return teamService.createTeam(team);
     }
 
@@ -37,7 +38,7 @@ public class TeamController {
     }
 
     @PutMapping(value = "/teams/update")
-    public void updateTeam(@RequestBody Team team){
+    public void updateTeam(@RequestBody Team team) {
         teamService.updateTeamInfo(team);
     }
 

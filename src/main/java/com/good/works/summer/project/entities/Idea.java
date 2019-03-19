@@ -19,7 +19,7 @@ public class Idea {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Size(max=240)
+    @Size(max = 240)
     @NotNull
     private String description;
 
@@ -34,7 +34,7 @@ public class Idea {
     private Team team;
 
     @NotNull
-    @Size(max=100)
+    @Size(max = 100)
     private String organization;
 
     @NotNull
@@ -47,7 +47,7 @@ public class Idea {
     public Idea() {
     }
 
-    public Idea(@NotNull String description, Project project, Team team, @NotNull String organization, @NotNull Category category, City city) {
+    public Idea(@Size(max = 240) @NotNull String description, Project project, Team team, @NotNull @Size(max = 100) String organization, @NotNull Category category, City city) {
         this.description = description;
         this.project = project;
         this.team = team;
@@ -111,5 +111,6 @@ public class Idea {
     public void setProject(Project project) {
         this.project = project;
     }
+
 
 }
