@@ -67,7 +67,7 @@ public class IdeaService {
         List<Idea> ideas = getAllIdeas();
         List<Idea> filteredList = new ArrayList<>();
         for (Idea idea : ideas) {
-            if (idea.getProject().isDone() == true) {
+            if (idea.getProject() != null && idea.getProject().isDone() == true) {
                 filteredList.add(idea);
             }
         }
