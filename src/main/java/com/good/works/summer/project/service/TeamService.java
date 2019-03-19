@@ -26,10 +26,18 @@ public class TeamService {
         return sortByDescOrder(teamRepository.findAll());
     }
 
-    public List<Team> sortByDescOrder(List<Team> teams){
+    public List<Team> sortByDescOrder(List<Team> teams) {
         return teams.stream()
-                .sorted((a,b)->b.getId()-a.getId())
+                .sorted((a, b) -> b.getId() - a.getId())
                 .collect(Collectors.toList());
+    }
+
+    public void updateTeamInfo(Team team) {
+        team.setLeadName(team.getLeadName());
+        team.setLeadEmail(team.getLeadEmail());
+        team.setTeamName(team.getTeamName());
+        team.setIdeas(team.getIdeas());
+        teamRepository.save(team);
     }
 
     public void validateTeamUniqueness(Team teamToCheck) throws UniqueTeamException {
@@ -128,7 +136,7 @@ public class TeamService {
         filteredTeamsList = filteredTeamsList.stream()
                 .filter(team -> team.getIdeas().stream()
                         .anyMatch(idea -> idea.getCategory().equals(categoryTitle) && idea.getProject().isApproved()))
-                .sorted((a,b)->b.getId()-a.getId())
+                .sorted((a, b) -> b.getId() - a.getId())
                 .collect(Collectors.toList());
         return filteredTeamsList;
     }

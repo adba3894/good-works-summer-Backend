@@ -29,7 +29,7 @@ public class AdminService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Admin admin = adminRepository.findByUsername(username);
         if (admin == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException("Username or Password incorrect!");
         }
         return new User(admin.getUsername(), admin.getPassword(), emptyList());
     }

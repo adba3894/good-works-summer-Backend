@@ -36,5 +36,10 @@ public class TeamController {
         return teamService.getAllTeams();
     }
 
+    @PutMapping(value = "/teams/update")
+    public void updateTeam(@RequestBody Team team){
+        teamService.updateTeamInfo(team);
+    }
+
 
 }
