@@ -22,7 +22,7 @@ public class IdeaService {
     }
 
     public Idea addIdea(Idea idea) {
-        idea.setProject(null);
+        //idea.setProject(null);
         return ideaRepository.save(idea);
     }
 
