@@ -28,6 +28,7 @@ public class Idea {
     @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private Project project;
 
+
     @ManyToOne
     @JoinColumn(name = "team_id")
     @OnDelete(action = OnDeleteAction.CASCADE)

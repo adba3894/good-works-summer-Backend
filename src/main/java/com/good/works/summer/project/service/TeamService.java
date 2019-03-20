@@ -149,7 +149,6 @@ public class TeamService {
         }
     }
 
-    //cia keista biski
     public List<Team> filterTeamsByCategory(Category categoryTitle) {
         List<Team> filteredTeamsList = teamRepository.findAll();
         filteredTeamsList = filteredTeamsList.stream()

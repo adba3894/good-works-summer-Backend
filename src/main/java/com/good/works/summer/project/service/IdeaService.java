@@ -1,6 +1,7 @@
 package com.good.works.summer.project.service;
 
 import com.good.works.summer.project.entities.Idea;
+import com.good.works.summer.project.entities.Project;
 import com.good.works.summer.project.enums.Category;
 import com.good.works.summer.project.enums.IdeaState;
 import com.good.works.summer.project.exceptions.UniqueIdeaException;
@@ -26,13 +27,12 @@ public class IdeaService {
         validateIdeaUniqueness(idea);
         Idea newIdea = new Idea();
         newIdea.setState(idea.getState());
-        newIdea.setProject(idea.getProject());
+        newIdea.setProject(new Project());
         newIdea.setState(IdeaState.PROPOSED);
         newIdea.setDescription(idea.getDescription());
         newIdea.setCity(idea.getCity());
         newIdea.setOrganization(idea.getOrganization());
         newIdea.setCategory(idea.getCategory());
-        //idea.setProject(null); //****
         return ideaRepository.save(newIdea);
     }
 
@@ -67,16 +67,6 @@ public class IdeaService {
         return ideas;
     }
 
-    public List<Idea> ideasFilter(List<Idea> ideas) {
-        List<Idea> filteredIdeas = new ArrayList<>();
-        for (Idea idea : ideas) {
-            if (idea.getProject() == null) {
-                filteredIdeas.add(idea);
-            }
-        }
-        return filteredIdeas;
-    }
-
     public List<Idea> filterIdeasWithDoneProject() {
         List<Idea> ideas = getAllIdeas();
         List<Idea> filteredList = new ArrayList<>();
@@ -87,5 +77,17 @@ public class IdeaService {
         }
         return filteredList;
     }
+
+    public void updateIdea(Idea idea){
+        idea.setState(idea.getState());
+        idea.setProject(new Project());
+        idea.setDescription(idea.getDescription());
+        idea.setCity(idea.getCity());
+        idea.setOrganization(idea.getOrganization());
+        idea.setCategory(idea.getCategory());
+        idea.setState(idea.getState());
+        ideaRepository.save(idea);
+    }
+
 
 }

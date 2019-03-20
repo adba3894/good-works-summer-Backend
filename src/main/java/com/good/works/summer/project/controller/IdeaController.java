@@ -32,11 +32,13 @@ public class IdeaController {
         ideaService.addIdea(idea);
     }
 
+    //veikia
     @GetMapping(value = "/ideas/filter/{category}")
     public List<Idea> filterIdeasByCategory(@PathVariable String category) {
         return ideaService.filterIdeasByCategory(Category.valueOf(category));
     }
 
+    //
     @GetMapping(value = "/ideas/filter/{category}/free")
     public List<Idea> filterIdeasWithNoProject(@PathVariable String category) {
         return ideaService.filterIdeasByCategoryWithNoProject(Category.valueOf(category));
@@ -50,6 +52,11 @@ public class IdeaController {
     @GetMapping(value = "/ideas/done")
     public List<Idea> filterIdeasWithDoneProjects(){
         return ideaService.filterIdeasWithDoneProject();
+    }
+
+    @PutMapping(value="ideas/update")
+    public void updateIdea(@RequestBody Idea idea){
+        ideaService.updateIdea(idea);
     }
 
 }
