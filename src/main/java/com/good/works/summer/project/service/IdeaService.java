@@ -22,7 +22,7 @@ public class IdeaService {
         return ideaRepository.findAll();
     }
 
-    public Idea addIdea(Idea idea) throws UniqueIdeaException{
+    public Idea addIdea(Idea idea) throws UniqueIdeaException {
         validateIdeaUniqueness(idea);
         Idea newIdea = new Idea();
         newIdea.setState(idea.getState());

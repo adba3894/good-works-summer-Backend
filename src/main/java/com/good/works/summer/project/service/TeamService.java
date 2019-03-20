@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -170,7 +169,8 @@ public class TeamService {
                 Idea existingIdea = ideaRepository.findById(idea.getId()).get();
                 existingIdea.setState(IdeaState.TAKEN);
                 ideas.add(existingIdea);
-            } else {
+            }
+            else {
                 Idea newIdea = new Idea();
                 newIdea.setState(idea.getState());
                 newIdea.setProject(idea.getProject());

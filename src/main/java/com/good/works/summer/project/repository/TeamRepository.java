@@ -10,5 +10,5 @@ import java.util.List;
 public interface TeamRepository extends CrudRepository<Team, Integer> {
 
     List<Team> findAll();
-    Team findById(int teamId);
+
 }

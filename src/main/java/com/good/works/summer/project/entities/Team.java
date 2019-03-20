@@ -9,8 +9,6 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-//@Table(name = "team", uniqueConstraints = {
-//        @UniqueConstraint(name = "uniqueTeamConstraint", columnNames = {"leadName","teamName", "leadEmail", "city_id", "organization", "team_id"})})
 @Table(name = "team")
 public class Team {
 

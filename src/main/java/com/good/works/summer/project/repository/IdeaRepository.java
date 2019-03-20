@@ -10,6 +10,5 @@ import java.util.List;
 public interface IdeaRepository extends CrudRepository<Idea, Integer> {
 
     List<Idea> findAll();
-    List<Idea> findAllById(int id);
 
 }
