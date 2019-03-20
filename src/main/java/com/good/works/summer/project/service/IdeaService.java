@@ -2,6 +2,7 @@ package com.good.works.summer.project.service;
 
 import com.good.works.summer.project.entities.Idea;
 import com.good.works.summer.project.enums.Category;
+import com.good.works.summer.project.enums.IdeaState;
 import com.good.works.summer.project.exceptions.UniqueIdeaException;
 import com.good.works.summer.project.repository.IdeaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,16 @@ public class IdeaService {
 
     public Idea addIdea(Idea idea) throws UniqueIdeaException{
         validateIdeaUniqueness(idea);
-        idea.setProject(null); //****
-        return ideaRepository.save(idea);
+        Idea newIdea = new Idea();
+        newIdea.setState(idea.getState());
+        newIdea.setProject(idea.getProject());
+        newIdea.setState(IdeaState.PROPOSED);
+        newIdea.setDescription(idea.getDescription());
+        newIdea.setCity(idea.getCity());
+        newIdea.setOrganization(idea.getOrganization());
+        newIdea.setCategory(idea.getCategory());
+        //idea.setProject(null); //****
+        return ideaRepository.save(newIdea);
     }
 
     public void validateIdeaUniqueness(Idea ideaToValidate) throws UniqueIdeaException {
@@ -45,7 +54,9 @@ public class IdeaService {
     }
 
     public List<Idea> filterIdeasByCategoryWithNoProject(Category categoryTitle) {
-        List<Idea> ideas = filterIdeasByCategory(categoryTitle);
+        List<Idea> ideas = filterIdeasByCategory(categoryTitle).stream()
+                .filter(idea -> idea.getState().equals(IdeaState.PROPOSED))
+                .collect(Collectors.toList());
         return ideasFilter(ideas);
     }
 

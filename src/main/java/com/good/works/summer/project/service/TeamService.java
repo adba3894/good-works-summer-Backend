@@ -3,6 +3,7 @@ package com.good.works.summer.project.service;
 import com.good.works.summer.project.entities.Idea;
 import com.good.works.summer.project.entities.Team;
 import com.good.works.summer.project.enums.Category;
+import com.good.works.summer.project.enums.IdeaState;
 import com.good.works.summer.project.exceptions.TeamSizeException;
 import com.good.works.summer.project.exceptions.UniqueTeamException;
 import com.good.works.summer.project.repository.IdeaRepository;
@@ -10,8 +11,13 @@ import com.good.works.summer.project.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.good.works.summer.project.enums.IdeaState.PROPOSED;
+
 
 @Service
 public class TeamService {
@@ -22,11 +28,18 @@ public class TeamService {
     @Autowired
     public IdeaRepository ideaRepository;
 
-    public Team createTeam(Team team) throws UniqueTeamException, TeamSizeException{
-        //Team teamToCreate = assignIdeaToTeam(team);
-        validateTeamUniqueness(team);
-        doesOrganizationHasMoreThanFiveTeamsInSameCity(team);
-        return teamRepository.save(team);
+    public Team createTeam(Team team) throws UniqueTeamException, TeamSizeException {
+        List<Idea> ideas = extractIdeaFromTeam(team);
+
+        Team teamToCreate = new Team();
+        teamToCreate.setLeadName(team.getLeadName());
+        teamToCreate.setTeamName(team.getTeamName());
+        teamToCreate.setLeadEmail(team.getLeadEmail());
+        teamToCreate.setIdeas(ideas);
+
+        validateTeamUniqueness(teamToCreate);
+        doesOrganizationHasMoreThanFiveTeamsInSameCity(teamToCreate);
+        return teamRepository.save(teamToCreate);
     }
 
     public List<Team> getAllTeams() {
@@ -137,28 +150,39 @@ public class TeamService {
         }
     }
 
-
+    //cia keista biski
     public List<Team> filterTeamsByCategory(Category categoryTitle) {
         List<Team> filteredTeamsList = teamRepository.findAll();
         filteredTeamsList = filteredTeamsList.stream()
                 .filter(team -> team.getIdeas().stream()
-                        .anyMatch(idea -> idea.getCategory().equals(categoryTitle) && idea.getProject().isApproved()))
+                        .anyMatch(idea -> idea.getCategory().equals(categoryTitle)
+                                && idea.getProject().getIdea().getState() == PROPOSED
+                                && idea.getProject().isApproved()))
                 .sorted((a, b) -> b.getId() - a.getId())
                 .collect(Collectors.toList());
         return filteredTeamsList;
     }
 
-    public Team assignIdeaToTeam(Team team){
-        List<Idea> ideas = team.getIdeas();
-        for (Idea idea : ideas) {
-            if(idea.getId()!=0){
-                team.setIdeas(ideaRepository.findAllById(idea.getId()));
-//                for (Idea ideaToAddProject: ideaRepository.findAllById(idea.getId())){
-//                    ideaToAddProject.setProject(idea.getProject());
-//                }
+    public List<Idea> extractIdeaFromTeam(Team team) {
+        List<Idea> ideas = new ArrayList<>();
+        for (Idea idea : team.getIdeas()) {
+            if (idea.getId() != 0) {
+                Idea existingIdea = ideaRepository.findById(idea.getId()).get();
+                existingIdea.setState(IdeaState.TAKEN);
+                ideas.add(existingIdea);
+            } else {
+                Idea newIdea = new Idea();
+                newIdea.setState(idea.getState());
+                newIdea.setProject(idea.getProject());
+                newIdea.setCity(idea.getCity());
+                newIdea.setDescription(idea.getDescription());
+                newIdea.setOrganization(idea.getOrganization());
+                newIdea.setCategory(idea.getCategory());
+                newIdea.setState(IdeaState.WAITING_FOR_REVIEW);
+                ideas.add(newIdea);
             }
         }
-        return team;
+        return ideas;
     }
 
 }

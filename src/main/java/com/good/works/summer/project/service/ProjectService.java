@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.good.works.summer.project.enums.IdeaState.PROPOSED;
+
 @Service
 public class ProjectService {
 
@@ -20,6 +22,7 @@ public class ProjectService {
 
     public void approveById(int projectId) {
         Project project = projectRepository.getProjectById(projectId);
+        project.getIdea().setState(PROPOSED);
         project.setApproved(true);
         projectRepository.save(project);
     }
