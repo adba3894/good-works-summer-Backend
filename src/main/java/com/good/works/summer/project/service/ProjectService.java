@@ -21,14 +21,14 @@ public class ProjectService {
     }
 
     public void approveById(int projectId) {
-        Project project = projectRepository.getProjectById(projectId);
+        Project project = projectRepository.findById(projectId);
         project.getIdea().setState(PROPOSED);
         project.setApproved(true);
         projectRepository.save(project);
     }
 
     public void markDoneByID(int projectId) throws ProjectNotApprovedException {
-        Project project = projectRepository.getProjectById(projectId);
+        Project project = projectRepository.findById(projectId);
         if (project.isApproved()) {
             project.setDone(true);
         } else {

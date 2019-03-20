@@ -38,9 +38,6 @@ public class Team {
     @JoinColumn(name = "team_id")
     private List<Idea> ideas;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<Member> members;
-
     public Team(@NotNull @NotEmpty @Size(max = 100) String leadName, @NotNull @NotEmpty @Email(message = "email must contain '@' symbol") String leadEmail, @NotNull @NotEmpty @Size(max = 100) String teamName, List<Idea> ideas) {
         this.leadName = leadName;
         this.leadEmail = leadEmail;
