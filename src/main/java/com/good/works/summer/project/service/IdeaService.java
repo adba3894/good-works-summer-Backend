@@ -57,12 +57,14 @@ public class IdeaService {
         List<Idea> ideas = filterIdeasByCategory(categoryTitle).stream()
                 .filter(idea -> idea.getState().equals(IdeaState.PROPOSED))
                 .collect(Collectors.toList());
-        return ideasFilter(ideas);
+        return ideas;
     }
 
     public List<Idea> filterIdeasWithNoProject() {
-        List<Idea> ideas = ideaRepository.findAll();
-        return ideasFilter(ideas);
+        List<Idea> ideas = ideaRepository.findAll().stream()
+                .filter(idea -> idea.getState().equals(IdeaState.PROPOSED))
+                .collect(Collectors.toList());
+        return ideas;
     }
 
     public List<Idea> ideasFilter(List<Idea> ideas) {

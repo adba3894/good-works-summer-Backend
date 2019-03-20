@@ -40,6 +40,9 @@ public class ProjectService {
     public int calculatePercentage() {
         int projectsDone = projectRepository.findAllByIsDone(true).size();
         int totalProjects = projectRepository.findAll().size();
+        if(totalProjects == 0){
+            return 0;
+        }
         return (projectsDone * 100 / totalProjects);
     }
 }
