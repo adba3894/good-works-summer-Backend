@@ -28,7 +28,6 @@ public class ProjectService {
 
     public void approveById(int projectId) {
         Project project = projectRepository.findById(projectId);
-        //project.getIdea().setState(PROPOSED);
         Idea idea = ideaRepository.findByProject(project);
         idea.setState(TAKEN);
         ideaRepository.save(idea);
@@ -40,11 +39,6 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId);
         if (project.isApproved()) {
             project.setDone(true);
-            //**************
-//            Idea idea = ideaRepository.findByProject(project);
-//            idea.setState(TAKEN);
-//            ideaRepository.save(idea);
-            //***************
         } else {
             throw new ProjectNotApprovedException();
         }

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.good.works.summer.project.enums.IdeaState.PROPOSED;
+import static com.good.works.summer.project.enums.IdeaState.TAKEN;
 
 
 @Service
@@ -153,7 +154,7 @@ public class TeamService {
         filteredTeamsList = filteredTeamsList.stream()
                 .filter(team -> team.getIdeas().stream()
                         .anyMatch(idea -> idea.getCategory().equals(categoryTitle)
-                                && idea.getProject().getIdea().getState() == PROPOSED
+                                && idea.getProject().getIdea().getState() == TAKEN
                                 && idea.getProject().isApproved()))
                 .sorted((a, b) -> b.getId() - a.getId())
                 .collect(Collectors.toList());
@@ -181,6 +182,6 @@ public class TeamService {
             }
         }
         return ideas;
-    }//kai teamas apsiraso ideja pats tai tada po aproovinimo ji turi buti jau taken
+    }
 
 }

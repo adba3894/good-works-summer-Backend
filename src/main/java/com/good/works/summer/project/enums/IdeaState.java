@@ -5,4 +5,3 @@ public enum IdeaState {
     PROPOSED, // adminas patvirtino, komanda nepaeme
     TAKEN // komanda apeme ir adminas patvirtino
 }
-
