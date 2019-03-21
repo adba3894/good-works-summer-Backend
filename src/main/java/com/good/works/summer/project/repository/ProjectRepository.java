@@ -15,6 +15,6 @@ public interface ProjectRepository extends CrudRepository<Project, Integer> {
 
     Project findById(int id);
 
-    List<Project> findAllByApproved(boolean isApproved);
+    List<Project> findAllByIsApproved(boolean isApproved);
 
 }

@@ -46,7 +46,7 @@ public class ProjectService {
 
     public int calculatePercentage() {
         int projectsDone = projectRepository.findAllByIsDone(true).size();
-        int totalProjects = projectRepository.findAllByApproved(true).size();
+        int totalProjects = projectRepository.findAllByIsApproved(true).size();
         if (totalProjects == 0) {
             return 0;
         }
