@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +56,9 @@ public class TeamService {
         team.setLeadEmail(teamToUpdate.getLeadEmail());
         team.setTeamName(teamToUpdate.getTeamName());
         team.setIdeas(teamToUpdate.getIdeas());
-        teamRepository.save(teamToUpdate);
+        team.getIdeas().forEach(e->e.setState(e.getState()));
+
+        teamRepository.save(team);
     }
 
     public void validateTeamUniqueness(Team teamToCheck) throws UniqueTeamException {
