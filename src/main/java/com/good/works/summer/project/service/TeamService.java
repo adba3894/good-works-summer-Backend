@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.good.works.summer.project.enums.IdeaState.PROPOSED;
 import static com.good.works.summer.project.enums.IdeaState.TAKEN;
 
 
@@ -152,12 +151,12 @@ public class TeamService {
     public List<Team> filterTeamsByCategory(Category categoryTitle) {
         List<Team> filteredTeamsList = teamRepository.findAll();
         List<Team> resultList = new ArrayList<>();
-        for(Team team: filteredTeamsList){
-            for(Idea idea: team.getIdeas()){
-                if(idea.getCategory().equals(categoryTitle)
+        for (Team team : filteredTeamsList) {
+            for (Idea idea : team.getIdeas()) {
+                if (idea.getCategory().equals(categoryTitle)
                         && ideaRepository.findByProject(idea.getProject()).getState().equals(TAKEN)
-                        && ideaRepository.findByProject(idea.getProject()).getProject().isApproved()){
-                        resultList.add(team);
+                        && ideaRepository.findByProject(idea.getProject()).getProject().isApproved()) {
+                    resultList.add(team);
                 }
             }
         }
@@ -165,18 +164,6 @@ public class TeamService {
                 .sorted((a, b) -> b.getId() - a.getId())
                 .collect(Collectors.toList());
     }
-
-//    public List<Team> filterTeamsByCategory(Category categoryTitle) {
-//        List<Team> filteredTeamsList = teamRepository.findAll();
-//        filteredTeamsList = filteredTeamsList.stream()
-//                .filter(team -> team.getIdeas().stream()
-//                        .anyMatch(idea -> idea.getCategory().equals(categoryTitle)
-//                                && idea.getProject().getIdea().getState().equals(TAKEN)
-//                                && idea.getProject().isApproved()))
-//                .sorted((a, b) -> b.getId() - a.getId())
-//                .collect(Collectors.toList());
-//        return filteredTeamsList;
-//    }
 
     public List<Idea> extractIdeaFromTeam(Team team) {
         List<Idea> ideas = new ArrayList<>();

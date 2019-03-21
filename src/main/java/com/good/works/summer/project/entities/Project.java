@@ -16,17 +16,6 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-//    @OneToOne
-//    @JoinColumn(name = "idea_id", referencedColumnName = "idea_id")
-//    @JsonIgnore
-//    private Idea idea;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "team_id", referencedColumnName = "team_id")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JsonIgnore
-//    private Team team;
-
     @NotNull
     @Column(columnDefinition = "boolean default false")
     private boolean isApproved;

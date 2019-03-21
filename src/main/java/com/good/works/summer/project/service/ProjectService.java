@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.good.works.summer.project.enums.IdeaState.PROPOSED;
 import static com.good.works.summer.project.enums.IdeaState.TAKEN;
 
 @Service

@@ -52,7 +52,7 @@ public class IdeaController {
         return ideaService.filterIdeasWithDoneProject();
     }
 
-    @PutMapping(value = "ideas/update")
+    @PutMapping(value = "/ideas/update")
     public void updateIdea(@RequestBody Idea idea) {
         ideaService.updateIdea(idea);
     }
