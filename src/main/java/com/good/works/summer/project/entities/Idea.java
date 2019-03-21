@@ -46,7 +46,7 @@ public class Idea {
     @JoinColumn(name = "city_id")
     private City city;
 
-//    @Enumerated(value = EnumType.STRING)
+    //    @Enumerated(value = EnumType.STRING)
     private IdeaState state;
 
     public Idea() {

@@ -30,6 +30,7 @@ public class ProjectService {
         //project.getIdea().setState(PROPOSED);
         Idea idea = ideaRepository.findByProject(project);
         idea.setState(PROPOSED);
+        ideaRepository.save(idea);
         project.setApproved(true);
         projectRepository.save(project);
     }
@@ -47,7 +48,7 @@ public class ProjectService {
     public int calculatePercentage() {
         int projectsDone = projectRepository.findAllByIsDone(true).size();
         int totalProjects = projectRepository.findAll().size();
-        if(totalProjects == 0){
+        if (totalProjects == 0) {
             return 0;
         }
         return (projectsDone * 100 / totalProjects);

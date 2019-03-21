@@ -78,15 +78,15 @@ public class IdeaService {
         return filteredList;
     }
 
-    public void updateIdea(Idea idea){
-        idea.setState(idea.getState());
-        idea.setProject(new Project());
-        idea.setDescription(idea.getDescription());
-        idea.setCity(idea.getCity());
-        idea.setOrganization(idea.getOrganization());
-        idea.setCategory(idea.getCategory());
-        idea.setState(idea.getState());
-        ideaRepository.save(idea);
+    public void updateIdea(Idea ideaToUpdate) {
+        Idea idea = ideaRepository.findIdeaById(ideaToUpdate.getId());
+        idea.setState(ideaToUpdate.getState());
+        idea.setProject(ideaToUpdate.getProject());
+        idea.setDescription(ideaToUpdate.getDescription());
+        idea.setCity(ideaToUpdate.getCity());
+        idea.setOrganization(ideaToUpdate.getOrganization());
+        idea.setCategory(ideaToUpdate.getCategory());
+        ideaRepository.save(ideaToUpdate);
     }
 
 

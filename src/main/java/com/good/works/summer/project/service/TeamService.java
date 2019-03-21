@@ -29,13 +29,11 @@ public class TeamService {
 
     public Team createTeam(Team team) throws UniqueTeamException, TeamSizeException {
         List<Idea> ideas = extractIdeaFromTeam(team);
-
         Team teamToCreate = new Team();
         teamToCreate.setLeadName(team.getLeadName());
         teamToCreate.setTeamName(team.getTeamName());
         teamToCreate.setLeadEmail(team.getLeadEmail());
         teamToCreate.setIdeas(ideas);
-
         validateTeamUniqueness(teamToCreate);
         doesOrganizationHasMoreThanFiveTeamsInSameCity(teamToCreate);
         return teamRepository.save(teamToCreate);
@@ -51,12 +49,13 @@ public class TeamService {
                 .collect(Collectors.toList());
     }
 
-    public void updateTeamInfo(Team team) {
-        team.setLeadName(team.getLeadName());
-        team.setLeadEmail(team.getLeadEmail());
-        team.setTeamName(team.getTeamName());
-        team.setIdeas(team.getIdeas());
-        teamRepository.save(team);
+    public void updateTeamInfo(Team teamToUpdate) {
+        Team team = teamRepository.findTeamsById(teamToUpdate.getId());
+        team.setLeadName(teamToUpdate.getLeadName());
+        team.setLeadEmail(teamToUpdate.getLeadEmail());
+        team.setTeamName(teamToUpdate.getTeamName());
+        team.setIdeas(teamToUpdate.getIdeas());
+        teamRepository.save(teamToUpdate);
     }
 
     public void validateTeamUniqueness(Team teamToCheck) throws UniqueTeamException {
@@ -168,8 +167,7 @@ public class TeamService {
                 Idea existingIdea = ideaRepository.findById(idea.getId()).get();
                 existingIdea.setState(IdeaState.TAKEN);
                 ideas.add(existingIdea);
-            }
-            else {
+            } else {
                 Idea newIdea = new Idea();
                 newIdea.setState(idea.getState());
                 newIdea.setProject(idea.getProject());

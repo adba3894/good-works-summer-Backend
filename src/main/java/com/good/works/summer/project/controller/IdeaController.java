@@ -54,13 +54,13 @@ public class IdeaController {
 
     //cia ++
     @GetMapping(value = "/ideas/done")
-    public List<Idea> filterIdeasWithDoneProjects(){
+    public List<Idea> filterIdeasWithDoneProjects() {
         return ideaService.filterIdeasWithDoneProject();
     }
 
-    //taisyst
-    @PutMapping(value="ideas/update")
-    public void updateIdea(@RequestBody Idea idea){
+    //++
+    @PutMapping(value = "ideas/update")
+    public void updateIdea(@RequestBody Idea idea) {
         ideaService.updateIdea(idea);
     }
 

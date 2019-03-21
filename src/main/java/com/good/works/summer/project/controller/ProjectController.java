@@ -36,9 +36,10 @@ public class ProjectController {
     public void makeProjectDone(@PathVariable int id) throws ProjectNotApprovedException {
         projectService.markDoneByID(id);
     }
+
     // veikia ++
     @GetMapping(value = "/projects/counter")
-    public int getDonePercentage(){
+    public int getDonePercentage() {
         return projectService.calculatePercentage();
     }
 

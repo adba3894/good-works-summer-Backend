@@ -11,6 +11,8 @@ import java.util.List;
 public interface IdeaRepository extends CrudRepository<Idea, Integer> {
 
     List<Idea> findAll();
+
     Idea findIdeaById(int id);
+
     Idea findByProject(Project project);
 }
