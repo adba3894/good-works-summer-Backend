@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.good.works.summer.project.enums.IdeaState.PROPOSED;
+import static com.good.works.summer.project.enums.IdeaState.TAKEN;
 
 @Service
 public class ProjectService {
@@ -39,6 +40,11 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId);
         if (project.isApproved()) {
             project.setDone(true);
+            //**************
+            Idea idea = ideaRepository.findByProject(project);
+            idea.setState(TAKEN);
+            ideaRepository.save(idea);
+            //***************
         } else {
             throw new ProjectNotApprovedException();
         }
