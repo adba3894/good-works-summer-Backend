@@ -1,7 +1,9 @@
 package com.good.works.summer.project.service;
 
+import com.good.works.summer.project.entities.Idea;
 import com.good.works.summer.project.entities.Project;
 import com.good.works.summer.project.exceptions.ProjectNotApprovedException;
+import com.good.works.summer.project.repository.IdeaRepository;
 import com.good.works.summer.project.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private IdeaRepository ideaRepository;
+
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
@@ -23,6 +28,8 @@ public class ProjectService {
     public void approveById(int projectId) {
         Project project = projectRepository.findById(projectId);
         //project.getIdea().setState(PROPOSED);
+        Idea idea = ideaRepository.findByProject(project);
+        idea.setState(PROPOSED);
         project.setApproved(true);
         projectRepository.save(project);
     }
