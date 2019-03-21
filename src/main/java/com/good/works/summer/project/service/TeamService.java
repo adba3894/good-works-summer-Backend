@@ -166,8 +166,8 @@ public class TeamService {
             if (idea.getId() != 0) {
                 Idea existingIdea = ideaRepository.findById(idea.getId()).get();
                 existingIdea.setState(IdeaState.TAKEN);
-                ideas.add(existingIdea);
                 ideaRepository.save(existingIdea);
+                ideas.add(existingIdea);
             } else {
                 Idea newIdea = new Idea();
                 newIdea.setState(idea.getState());
