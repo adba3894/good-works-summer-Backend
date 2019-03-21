@@ -16,16 +16,16 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "idea_id", referencedColumnName = "idea_id")
-    @JsonIgnore
-    private Idea idea;
-
-    @ManyToOne
-    @JoinColumn(name = "team_id", referencedColumnName = "team_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Team team;
+//    @OneToOne
+//    @JoinColumn(name = "idea_id", referencedColumnName = "idea_id")
+//    @JsonIgnore
+//    private Idea idea;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "team_id", referencedColumnName = "team_id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private Team team;
 
     @NotNull
     @Column(columnDefinition = "boolean default false")
@@ -35,9 +35,7 @@ public class Project {
     @Column(columnDefinition = "boolean default false")
     private boolean isDone;
 
-    public Project(Idea idea, Team team, @NotNull boolean isApproved, @NotNull boolean isDone) {
-        this.idea = idea;
-        this.team = team;
+    public Project(@NotNull boolean isApproved, @NotNull boolean isDone) {
         this.isApproved = isApproved;
         this.isDone = isDone;
     }
@@ -67,22 +65,6 @@ public class Project {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Idea getIdea() {
-        return idea;
-    }
-
-    public void setIdea(Idea idea) {
-        this.idea = idea;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
     }
 
 }
