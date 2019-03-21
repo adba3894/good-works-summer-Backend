@@ -181,6 +181,6 @@ public class TeamService {
             }
         }
         return ideas;
-    }
+    }//kai teamas apsiraso ideja pats tai tada po aproovinimo ji turi buti jau taken
 
 }

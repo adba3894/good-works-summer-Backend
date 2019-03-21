@@ -18,26 +18,21 @@ public class TeamController {
     private TeamService teamService;
 
 
-    //++
     @PostMapping(value = "/register")
     public Team registerTeam(@RequestBody Team team) throws UniqueTeamException, TeamSizeException {
         return teamService.createTeam(team);
     }
 
-    //meta errora kartais
     @GetMapping(value = "/teams/filter/{categoryName}")
     public List<Team> filtered(@PathVariable String categoryName) {
         return teamService.filterTeamsByCategory(Category.valueOf(categoryName));
     }
 
-    //++
     @GetMapping(value = "/teams")
     public List<Team> listAllTeams() {
         return teamService.getAllTeams();
     }
 
-
-    //taisyt
     @PutMapping(value = "/teams/update")
     public void updateTeam(@RequestBody Team team) {
         teamService.updateTeamInfo(team);

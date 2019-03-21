@@ -22,43 +22,36 @@ public class IdeaController {
     @Autowired
     private IdeaService ideaService;
 
-    //veikia ++
     @GetMapping(value = "/ideas")
     public List<Idea> listAllIdeas() {
         return ideaService.getAllIdeas();
     }
 
-    //veikia ++
     @PostMapping(value = "/ideas/add")
     public void addNewIdea(@RequestBody Idea idea) throws UniqueIdeaException {
         ideaService.addIdea(idea);
     }
 
-    //veikia ++
     @GetMapping(value = "/ideas/filter/{category}")
     public List<Idea> filterIdeasByCategory(@PathVariable String category) {
         return ideaService.filterIdeasByCategory(Category.valueOf(category));
     }
 
-    //++
     @GetMapping(value = "/ideas/filter/{category}/free")
     public List<Idea> filterIdeasWithNoProject(@PathVariable String category) {
         return ideaService.filterIdeasByCategoryWithNoProject(Category.valueOf(category));
     }
 
-    //veikia ++
     @GetMapping(value = "/ideas/free")
     public List<Idea> filterIdeasWithNoProject() {
         return ideaService.filterIdeasWithNoProject();
     }
 
-    //cia ++
     @GetMapping(value = "/ideas/done")
     public List<Idea> filterIdeasWithDoneProjects() {
         return ideaService.filterIdeasWithDoneProject();
     }
 
-    //++
     @PutMapping(value = "ideas/update")
     public void updateIdea(@RequestBody Idea idea) {
         ideaService.updateIdea(idea);

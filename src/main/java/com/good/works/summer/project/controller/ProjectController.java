@@ -19,25 +19,21 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    //veikia ++
     @GetMapping(value = "/projects")
     public List<Project> listAllProjects() {
         return projectService.getAllProjects();
     }
 
-    //++
     @PutMapping(value = "/projects/approve/{projectId}")
     public void approveProject(@PathVariable int projectId) {
         projectService.approveById(projectId);
     }
 
-    // veikia ++
     @PutMapping(value = "/projects/done/{id}")
     public void makeProjectDone(@PathVariable int id) throws ProjectNotApprovedException {
         projectService.markDoneByID(id);
     }
 
-    // veikia ++
     @GetMapping(value = "/projects/counter")
     public int getDonePercentage() {
         return projectService.calculatePercentage();
