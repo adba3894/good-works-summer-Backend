@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static java.util.Collections.emptyList;
@@ -17,6 +18,9 @@ public class AdminService implements UserDetailsService {
     @Autowired
     private AdminRepository adminRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public AdminService(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
     }
@@ -25,13 +29,17 @@ public class AdminService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Admin admin = adminRepository.findByUsername(username);
         if (admin == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException("Username or Password incorrect!");
         }
         return new User(admin.getUsername(), admin.getPassword(), emptyList());
     }
 
-    public void saveUser(Admin user) {
-        adminRepository.save(user);
+    public void saveAdmin(Admin admin) {
+        adminRepository.save(admin);
+    }
+
+    public void encryptPassword(Admin admin) {
+        admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
     }
 
 }

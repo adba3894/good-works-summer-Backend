@@ -1,7 +1,5 @@
 package com.good.works.summer.project.controller;
 
-import com.good.works.summer.project.entities.Idea;
-import com.good.works.summer.project.entities.Project;
 import com.good.works.summer.project.entities.Team;
 import com.good.works.summer.project.enums.Category;
 import com.good.works.summer.project.exceptions.TeamSizeException;
@@ -19,10 +17,9 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
+
     @PostMapping(value = "/register")
     public Team registerTeam(@RequestBody Team team) throws UniqueTeamException, TeamSizeException {
-        teamService.validateTeamUniqueness(team);
-        teamService.ifOrganizationHasMoreThanFiveTeamsInSameCity(team);
         return teamService.createTeam(team);
     }
 
@@ -34,6 +31,11 @@ public class TeamController {
     @GetMapping(value = "/teams")
     public List<Team> listAllTeams() {
         return teamService.getAllTeams();
+    }
+
+    @PutMapping(value = "/teams/update")
+    public void updateTeam(@RequestBody Team team) {
+        teamService.updateTeamInfo(team);
     }
 
 

@@ -3,11 +3,13 @@ package com.good.works.summer.project.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.good.works.summer.project.enums.Category;
+import com.good.works.summer.project.enums.IdeaState;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "idea")
@@ -18,12 +20,14 @@ public class Idea {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Size(max = 240)
     @NotNull
     private String description;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private Project project;
+
 
     @ManyToOne
     @JoinColumn(name = "team_id")
@@ -32,6 +36,7 @@ public class Idea {
     private Team team;
 
     @NotNull
+    @Size(max = 100)
     private String organization;
 
     @NotNull
@@ -41,16 +46,28 @@ public class Idea {
     @JoinColumn(name = "city_id")
     private City city;
 
+    //    @Enumerated(value = EnumType.STRING)
+    private IdeaState state;
+
     public Idea() {
     }
 
-    public Idea(@NotNull String description, Project project, Team team, @NotNull String organization, @NotNull Category category, City city) {
+    public Idea(@Size(max = 240) @NotNull String description, Project project, Team team, @NotNull @Size(max = 100) String organization, @NotNull Category category, City city, IdeaState state) {
         this.description = description;
         this.project = project;
         this.team = team;
         this.organization = organization;
         this.category = category;
         this.city = city;
+        this.state = state;
+    }
+
+    public IdeaState getState() {
+        return state;
+    }
+
+    public void setState(IdeaState state) {
+        this.state = state;
     }
 
     public Category getCategory() {

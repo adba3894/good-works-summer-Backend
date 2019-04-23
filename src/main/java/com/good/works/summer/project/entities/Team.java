@@ -9,8 +9,6 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-//@Table(name = "team", uniqueConstraints = {
-//        @UniqueConstraint(name = "uniqueTeamConstraint", columnNames = {"leadName","teamName", "leadEmail", "city_id", "organization", "team_id"})})
 @Table(name = "team")
 public class Team {
 
@@ -21,7 +19,7 @@ public class Team {
 
     @NotNull
     @NotEmpty
-    @Size(max = 30)
+    @Size(max = 100)
     private String leadName;
 
     @NotNull
@@ -31,14 +29,14 @@ public class Team {
 
     @NotNull
     @NotEmpty
-    @Size(max = 30)
+    @Size(max = 100)
     private String teamName;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id")
     private List<Idea> ideas;
 
-    public Team(@NotNull @NotEmpty @Size(max = 30) String leadName, @NotNull @NotEmpty @Email(message = "email must contain '@' symbol") String leadEmail, @NotNull @NotEmpty @Size(max = 30) String teamName, List<Idea> ideas) {
+    public Team(@NotNull @NotEmpty @Size(max = 100) String leadName, @NotNull @NotEmpty @Email(message = "email must contain '@' symbol") String leadEmail, @NotNull @NotEmpty @Size(max = 100) String teamName, List<Idea> ideas) {
         this.leadName = leadName;
         this.leadEmail = leadEmail;
         this.teamName = teamName;
@@ -87,6 +85,5 @@ public class Team {
     public void setIdeas(List<Idea> ideas) {
         this.ideas = ideas;
     }
-
 
 }

@@ -11,6 +11,10 @@ public interface ProjectRepository extends CrudRepository<Project, Integer> {
 
     List<Project> findAll();
 
-    Project getProjectById(int id);
+    List<Project> findAllByIsDone(boolean isDone);
+
+    Project findById(int id);
+
+    List<Project> findAllByIsApproved(boolean isApproved);
 
 }
