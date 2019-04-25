@@ -52,7 +52,7 @@ public class Idea {
     public Idea() {
     }
 
-    public Idea(@Size(max = 240) @NotNull String description, Project project, Team team, @NotNull @Size(max = 100) String organization, @NotNull Category category, City city, IdeaState state) {
+    public Idea(String description, Project project, Team team, String organization, Category category, City city, IdeaState state) {
         this.description = description;
         this.project = project;
         this.team = team;

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +55,7 @@ public class TeamService {
         team.setLeadEmail(teamToUpdate.getLeadEmail());
         team.setTeamName(teamToUpdate.getTeamName());
         team.setIdeas(teamToUpdate.getIdeas());
-        team.getIdeas().forEach(e->e.setState(e.getState()));
+        team.getIdeas().forEach(e -> e.setState(e.getState()));
 
         teamRepository.save(team);
     }

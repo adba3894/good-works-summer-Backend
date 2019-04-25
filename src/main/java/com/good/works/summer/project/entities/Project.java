@@ -24,7 +24,7 @@ public class Project {
     @Column(columnDefinition = "boolean default false")
     private boolean isDone;
 
-    public Project(@NotNull boolean isApproved, @NotNull boolean isDone) {
+    public Project(boolean isApproved, boolean isDone) {
         this.isApproved = isApproved;
         this.isDone = isDone;
     }
